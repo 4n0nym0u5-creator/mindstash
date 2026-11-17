@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useSyncExternalStore } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { StashProvider, useStash } from "@/lib/stash-store";
 import { BottomNav } from "@/components/bottom-nav";
@@ -14,23 +14,27 @@ function LoadingScreen() {
   );
 }
 
+function useIsClient() {
+  return useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
+}
+
 function Gate({ children }: { children: React.ReactNode }) {
   const { ready, onboarded } = useStash();
   const pathname = usePathname();
   const router = useRouter();
-  const [mounted, setMounted] = useState(false);
+  const isClient = useIsClient();
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted || !ready || !onboarded) return;
+    if (!isClient || !ready || !onboarded) return;
     if (pathname === "/") router.replace("/feed");
-  }, [mounted, ready, onboarded, pathname, router]);
+  }, [isClient, ready, onboarded, pathname, router]);
 
   // Keep SSR and the first client paint identical to avoid hydration mismatches.
-  if (!mounted || !ready) {
+  if (!isClient || !ready) {
     return <LoadingScreen />;
   }
 
