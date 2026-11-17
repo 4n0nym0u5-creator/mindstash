@@ -4,9 +4,8 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
-  useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 
@@ -29,8 +28,9 @@ type PersistedState = {
   readToday: string[];
 };
 
-type StashContextValue = PersistedState & {
-  ready: boolean;
+type Snapshot = PersistedState & { ready: boolean };
+
+type StashContextValue = Snapshot & {
   completeOnboarding: (topics: string[]) => void;
   toggleTopic: (topicId: string) => void;
   isStashed: (ideaId: string) => boolean;
@@ -51,6 +51,8 @@ const defaultState: PersistedState = {
   lastVisit: null,
   readToday: [],
 };
+
+const serverSnapshot: Snapshot = { ...defaultState, ready: false };
 
 const StashContext = createContext<StashContextValue | null>(null);
 
@@ -77,46 +79,89 @@ function computeStreak(prev: PersistedState): Pick<
   const continued = prev.lastVisit === yKey;
 
   return {
-    streak: continued ? prev.streak + 1 : prev.streak > 0 ? 1 : 1,
+    streak: continued ? prev.streak + 1 : 1,
     lastVisit: today,
     readToday: [],
   };
 }
 
+function readStorage(): PersistedState {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return { ...defaultState, ...computeStreak(defaultState) };
+    const parsed = JSON.parse(raw) as PersistedState;
+    return { ...parsed, ...computeStreak(parsed) };
+  } catch {
+    return { ...defaultState, ...computeStreak(defaultState) };
+  }
+}
+
+type Listener = () => void;
+
+function createStore() {
+  let snapshot: Snapshot = serverSnapshot;
+  let hydrated = false;
+  const listeners = new Set<Listener>();
+
+  const emit = () => {
+    listeners.forEach((l) => l());
+  };
+
+  const hydrate = () => {
+    if (hydrated || typeof window === "undefined") return;
+    snapshot = { ...readStorage(), ready: true };
+    hydrated = true;
+  };
+
+  return {
+    subscribe(listener: Listener) {
+      hydrate();
+      listeners.add(listener);
+      // Notify after subscribe so clients pick up the hydrated snapshot.
+      queueMicrotask(() => listener());
+      return () => listeners.delete(listener);
+    },
+    getSnapshot(): Snapshot {
+      return snapshot;
+    },
+    getServerSnapshot(): Snapshot {
+      return serverSnapshot;
+    },
+    setState(updater: (prev: PersistedState) => PersistedState) {
+      hydrate();
+      const current: PersistedState = {
+        onboarded: snapshot.onboarded,
+        topics: snapshot.topics,
+        stashed: snapshot.stashed,
+        collections: snapshot.collections,
+        streak: snapshot.streak,
+        lastVisit: snapshot.lastVisit,
+        readToday: snapshot.readToday,
+      };
+      const next = updater(current);
+      if (next === current) return;
+      snapshot = { ...next, ready: true };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      emit();
+    },
+  };
+}
+
+const store = createStore();
+
 export function StashProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<PersistedState>(defaultState);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    let next = defaultState;
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw) as PersistedState;
-        next = { ...parsed, ...computeStreak(parsed) };
-      } else {
-        next = { ...defaultState, ...computeStreak(defaultState) };
-      }
-    } catch {
-      next = { ...defaultState, ...computeStreak(defaultState) };
-    }
-    // Hydrate from localStorage once on mount (client-only).
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional client hydration
-    setState(next);
-    setReady(true);
-  }, []);
-
-  useEffect(() => {
-    if (!ready) return;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }, [state, ready]);
+  const snapshot = useSyncExternalStore(
+    store.subscribe,
+    store.getSnapshot,
+    store.getServerSnapshot,
+  );
 
   const completeOnboarding = useCallback((topics: string[]) => {
-    setState((s) => ({ ...s, onboarded: true, topics }));
+    store.setState((s) => ({ ...s, onboarded: true, topics }));
   }, []);
 
   const toggleTopic = useCallback((topicId: string) => {
-    setState((s) => {
+    store.setState((s) => {
       const has = s.topics.includes(topicId);
       return {
         ...s,
@@ -128,12 +173,12 @@ export function StashProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const isStashed = useCallback(
-    (ideaId: string) => state.stashed.includes(ideaId),
-    [state.stashed],
+    (ideaId: string) => snapshot.stashed.includes(ideaId),
+    [snapshot.stashed],
   );
 
   const toggleStash = useCallback((ideaId: string) => {
-    setState((s) => {
+    store.setState((s) => {
       const has = s.stashed.includes(ideaId);
       return {
         ...s,
@@ -145,7 +190,7 @@ export function StashProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const markRead = useCallback((ideaId: string) => {
-    setState((s) => {
+    store.setState((s) => {
       if (s.readToday.includes(ideaId)) return s;
       return { ...s, readToday: [...s.readToday, ideaId] };
     });
@@ -154,7 +199,7 @@ export function StashProvider({ children }: { children: ReactNode }) {
   const createCollection = useCallback((name: string, ideaId?: string) => {
     const trimmed = name.trim();
     if (!trimmed) return;
-    setState((s) => ({
+    store.setState((s) => ({
       ...s,
       collections: [
         {
@@ -173,7 +218,7 @@ export function StashProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const addToCollection = useCallback((collectionId: string, ideaId: string) => {
-    setState((s) => ({
+    store.setState((s) => ({
       ...s,
       collections: s.collections.map((c) =>
         c.id === collectionId && !c.ideaIds.includes(ideaId)
@@ -186,7 +231,7 @@ export function StashProvider({ children }: { children: ReactNode }) {
 
   const removeFromCollection = useCallback(
     (collectionId: string, ideaId: string) => {
-      setState((s) => ({
+      store.setState((s) => ({
         ...s,
         collections: s.collections.map((c) =>
           c.id === collectionId
@@ -199,7 +244,7 @@ export function StashProvider({ children }: { children: ReactNode }) {
   );
 
   const deleteCollection = useCallback((collectionId: string) => {
-    setState((s) => ({
+    store.setState((s) => ({
       ...s,
       collections: s.collections.filter((c) => c.id !== collectionId),
     }));
@@ -207,8 +252,7 @@ export function StashProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<StashContextValue>(
     () => ({
-      ...state,
-      ready,
+      ...snapshot,
       completeOnboarding,
       toggleTopic,
       isStashed,
@@ -220,8 +264,7 @@ export function StashProvider({ children }: { children: ReactNode }) {
       deleteCollection,
     }),
     [
-      state,
-      ready,
+      snapshot,
       completeOnboarding,
       toggleTopic,
       isStashed,
