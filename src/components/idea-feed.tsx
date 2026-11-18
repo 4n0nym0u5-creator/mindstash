@@ -10,7 +10,7 @@ import { IdeaCard } from "@/components/idea-card";
 import { Button } from "@/components/ui/button";
 
 export function IdeaFeed() {
-  const { topics, streak, markRead } = useStash();
+  const { topics, streak, markRead, profile } = useStash();
   const topicsKey = topics.slice().sort().join("|");
 
   const feed = useMemo(() => {
@@ -72,7 +72,9 @@ export function IdeaFeed() {
             Today&apos;s ideas
           </h1>
           <p className="mt-1 text-sm text-[#5F6B76]">
-            Quick microlearning insights
+            {profile?.energy
+              ? `Your plan · ${profile.monthlyGoal} ideas / week`
+              : "Quick microlearning insights"}
           </p>
         </div>
         <Link

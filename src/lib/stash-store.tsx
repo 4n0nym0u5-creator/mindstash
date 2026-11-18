@@ -9,7 +9,7 @@ import {
   type ReactNode,
 } from "react";
 
-const STORAGE_KEY = "mindstash-v2";
+const STORAGE_KEY = "mindstash-v3";
 
 export type Collection = {
   id: string;
@@ -20,9 +20,23 @@ export type Collection = {
 
 export type DayStatus = "read" | "freeze";
 
+export type UserProfile = {
+  profileTopics: string[];
+  reasons: string[];
+  energy: string | null;
+  styles: string[];
+  monthlyGoal: number;
+};
+
+export type OnboardingPayload = {
+  topics: string[];
+  profile: UserProfile;
+};
+
 type PersistedState = {
   onboarded: boolean;
   topics: string[];
+  profile: UserProfile | null;
   stashed: string[];
   collections: Collection[];
   streak: number;
@@ -36,7 +50,7 @@ type PersistedState = {
 type Snapshot = PersistedState & { ready: boolean };
 
 type StashContextValue = Snapshot & {
-  completeOnboarding: (topics: string[]) => void;
+  completeOnboarding: (payload: OnboardingPayload) => void;
   toggleTopic: (topicId: string) => void;
   isStashed: (ideaId: string) => boolean;
   toggleStash: (ideaId: string) => void;
@@ -51,6 +65,7 @@ type StashContextValue = Snapshot & {
 const defaultState: PersistedState = {
   onboarded: false,
   topics: [],
+  profile: null,
   stashed: [],
   collections: [],
   streak: 0,
@@ -98,20 +113,44 @@ function computeStreak(prev: PersistedState): PersistedState {
 function readStorage(): PersistedState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) {
-      // migrate v1 if present
-      const v1 = localStorage.getItem("mindstash-v1");
-      if (v1) {
-        const parsed = JSON.parse(v1) as Partial<PersistedState>;
-        return computeStreak({ ...defaultState, ...parsed });
-      }
-      return computeStreak(defaultState);
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<PersistedState>;
+      return computeStreak({ ...defaultState, ...parsed });
     }
-    const parsed = JSON.parse(raw) as Partial<PersistedState>;
-    return computeStreak({ ...defaultState, ...parsed });
+
+    // Migrate older keys; re-run onboarding if no profile yet.
+    for (const key of ["mindstash-v2", "mindstash-v1"]) {
+      const legacy = localStorage.getItem(key);
+      if (!legacy) continue;
+      const parsed = JSON.parse(legacy) as Partial<PersistedState>;
+      return computeStreak({
+        ...defaultState,
+        ...parsed,
+        profile: parsed.profile ?? null,
+        onboarded: Boolean(parsed.profile) && Boolean(parsed.onboarded),
+      });
+    }
+
+    return computeStreak(defaultState);
   } catch {
     return computeStreak(defaultState);
   }
+}
+
+function sliceState(snapshot: Snapshot): PersistedState {
+  return {
+    onboarded: snapshot.onboarded,
+    topics: snapshot.topics,
+    profile: snapshot.profile,
+    stashed: snapshot.stashed,
+    collections: snapshot.collections,
+    streak: snapshot.streak,
+    maxStreak: snapshot.maxStreak,
+    freezesLeft: snapshot.freezesLeft,
+    lastVisit: snapshot.lastVisit,
+    readToday: snapshot.readToday,
+    dayLog: snapshot.dayLog,
+  };
 }
 
 type Listener = () => void;
@@ -146,18 +185,7 @@ function createStore() {
     },
     setState(updater: (prev: PersistedState) => PersistedState) {
       hydrate();
-      const current: PersistedState = {
-        onboarded: snapshot.onboarded,
-        topics: snapshot.topics,
-        stashed: snapshot.stashed,
-        collections: snapshot.collections,
-        streak: snapshot.streak,
-        maxStreak: snapshot.maxStreak,
-        freezesLeft: snapshot.freezesLeft,
-        lastVisit: snapshot.lastVisit,
-        readToday: snapshot.readToday,
-        dayLog: snapshot.dayLog,
-      };
+      const current = sliceState(snapshot);
       const next = updater(current);
       if (next === current) return;
       snapshot = { ...next, ready: true };
@@ -176,8 +204,13 @@ export function StashProvider({ children }: { children: ReactNode }) {
     store.getServerSnapshot,
   );
 
-  const completeOnboarding = useCallback((topics: string[]) => {
-    store.setState((s) => ({ ...s, onboarded: true, topics }));
+  const completeOnboarding = useCallback((payload: OnboardingPayload) => {
+    store.setState((s) => ({
+      ...s,
+      onboarded: true,
+      topics: payload.topics,
+      profile: payload.profile,
+    }));
   }, []);
 
   const toggleTopic = useCallback((topicId: string) => {
