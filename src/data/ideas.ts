@@ -1,3 +1,5 @@
+import type { ArtKind } from "@/components/card-art";
+
 export type Idea = {
   id: string;
   title: string;
@@ -8,6 +10,10 @@ export type Idea = {
   curator: string;
   minutes: number;
   art: string;
+  artKind: ArtKind;
+  format: "insight" | "quote" | "list";
+  bullets?: string[];
+  quoteAuthor?: string;
 };
 
 export const ideas: Idea[] = [
@@ -20,6 +26,9 @@ export const ideas: Idea[] = [
     source: "Atomic Habits — James Clear",
     curator: "Maya Chen",
     minutes: 2,
+    artKind: "habit-loop" as const,
+    format: "list" as const,
+    bullets: ["Notice the cue", "Design the routine", "Celebrate the reward"],
     art: "linear-gradient(145deg, #0f766e 0%, #115e59 40%, #042f2e 100%)",
   },
   {
@@ -31,6 +40,8 @@ export const ideas: Idea[] = [
     source: "Atomic Habits — James Clear",
     curator: "Maya Chen",
     minutes: 1,
+    artKind: "zones" as const,
+    format: "insight" as const,
     art: "linear-gradient(160deg, #134e4a, #0d9488 55%, #99f6e4)",
   },
   {
@@ -42,6 +53,9 @@ export const ideas: Idea[] = [
     source: "General Semantics — Alfred Korzybski",
     curator: "Jonah Ellis",
     minutes: 2,
+    artKind: "books" as const,
+    format: "quote" as const,
+    quoteAuthor: "Alfred Korzybski",
     art: "linear-gradient(150deg, #0f172a, #1e293b 50%, #64748b)",
   },
   {
@@ -53,6 +67,8 @@ export const ideas: Idea[] = [
     source: "Mental Models — various",
     curator: "Jonah Ellis",
     minutes: 2,
+    artKind: "lightbulb" as const,
+    format: "insight" as const,
     art: "linear-gradient(145deg, #1e293b, #334155 45%, #f59e0b33)",
   },
   {
@@ -64,6 +80,8 @@ export const ideas: Idea[] = [
     source: "The Psychology of Money — Morgan Housel",
     curator: "Priya Nair",
     minutes: 2,
+    artKind: "waves" as const,
+    format: "insight" as const,
     art: "linear-gradient(155deg, #78350f, #b45309 50%, #fcd34d55)",
   },
   {
@@ -75,6 +93,9 @@ export const ideas: Idea[] = [
     source: "The Psychology of Money — Morgan Housel",
     curator: "Priya Nair",
     minutes: 2,
+    artKind: "portrait" as const,
+    format: "list" as const,
+    bullets: ["Notice the cue", "Design the routine", "Celebrate the reward"],
     art: "linear-gradient(140deg, #92400e, #d97706 60%, #fef3c7)",
   },
   {
@@ -86,6 +107,9 @@ export const ideas: Idea[] = [
     source: "Thinking, Fast and Slow — Daniel Kahneman",
     curator: "Elena Voss",
     minutes: 2,
+    artKind: "compass" as const,
+    format: "quote" as const,
+    quoteAuthor: "Daniel Kahneman",
     art: "linear-gradient(150deg, #1e3a8a, #2563eb 55%, #93c5fd55)",
   },
   {
@@ -97,6 +121,8 @@ export const ideas: Idea[] = [
     source: "Thinking, Fast and Slow — Daniel Kahneman",
     curator: "Elena Voss",
     minutes: 2,
+    artKind: "spark" as const,
+    format: "insight" as const,
     art: "linear-gradient(160deg, #1e40af, #3b82f6, #dbeafe)",
   },
   {
@@ -108,6 +134,9 @@ export const ideas: Idea[] = [
     source: "Enchiridion — Epictetus",
     curator: "Marcus Hale",
     minutes: 2,
+    artKind: "habit-loop" as const,
+    format: "quote" as const,
+    quoteAuthor: "Epictetus",
     art: "linear-gradient(145deg, #111827, #374151 50%, #a8a29e44)",
   },
   {
@@ -119,6 +148,9 @@ export const ideas: Idea[] = [
     source: "Letters from a Stoic — Seneca",
     curator: "Marcus Hale",
     minutes: 1,
+    artKind: "zones" as const,
+    format: "quote" as const,
+    quoteAuthor: "Seneca",
     art: "linear-gradient(155deg, #1c1917, #44403c 45%, #d6d3d1)",
   },
   {
@@ -130,6 +162,9 @@ export const ideas: Idea[] = [
     source: "Why We Sleep — Matthew Walker",
     curator: "Sara Okonkwo",
     minutes: 2,
+    artKind: "books" as const,
+    format: "list" as const,
+    bullets: ["Notice the cue", "Design the routine", "Celebrate the reward"],
     art: "linear-gradient(150deg, #064e3b, #059669 50%, #6ee7b755)",
   },
   {
@@ -141,6 +176,8 @@ export const ideas: Idea[] = [
     source: "Exercise physiology — various",
     curator: "Sara Okonkwo",
     minutes: 1,
+    artKind: "lightbulb" as const,
+    format: "insight" as const,
     art: "linear-gradient(145deg, #065f46, #10b981 60%, #ecfdf5)",
   },
   {
@@ -152,6 +189,8 @@ export const ideas: Idea[] = [
     source: "Art & Fear — Bayles & Orland",
     curator: "Nina Park",
     minutes: 2,
+    artKind: "waves" as const,
+    format: "insight" as const,
     art: "linear-gradient(150deg, #9f1239, #e11d48 50%, #fecdd855)",
   },
   {
@@ -163,6 +202,8 @@ export const ideas: Idea[] = [
     source: "Steal Like an Artist — Austin Kleon",
     curator: "Nina Park",
     minutes: 1,
+    artKind: "portrait" as const,
+    format: "insight" as const,
     art: "linear-gradient(160deg, #881337, #fb7185, #fff1f2)",
   },
   {
@@ -174,6 +215,8 @@ export const ideas: Idea[] = [
     source: "The Fearless Organization — Amy Edmondson",
     curator: "Dev Patel",
     minutes: 2,
+    artKind: "compass" as const,
+    format: "insight" as const,
     art: "linear-gradient(145deg, #312e81, #4f46e5 55%, #c7d2fe55)",
   },
   {
@@ -185,6 +228,9 @@ export const ideas: Idea[] = [
     source: "Radical Candor — Kim Scott",
     curator: "Dev Patel",
     minutes: 1,
+    artKind: "spark" as const,
+    format: "list" as const,
+    bullets: ["Notice the cue", "Design the routine", "Celebrate the reward"],
     art: "linear-gradient(155deg, #3730a3, #6366f1, #e0e7ff)",
   },
   {
@@ -196,6 +242,8 @@ export const ideas: Idea[] = [
     source: "The Logic of Scientific Discovery — Karl Popper",
     curator: "Aisha Rahman",
     minutes: 2,
+    artKind: "habit-loop" as const,
+    format: "insight" as const,
     art: "linear-gradient(150deg, #155e75, #0891b2 50%, #a5f3fc55)",
   },
   {
@@ -207,6 +255,8 @@ export const ideas: Idea[] = [
     source: "Mental Models — various",
     curator: "Aisha Rahman",
     minutes: 2,
+    artKind: "zones" as const,
+    format: "insight" as const,
     art: "linear-gradient(145deg, #0e7490, #06b6d4 55%, #cffafe)",
   },
   {
@@ -218,6 +268,8 @@ export const ideas: Idea[] = [
     source: "Deep Work — Cal Newport",
     curator: "Maya Chen",
     minutes: 2,
+    artKind: "books" as const,
+    format: "insight" as const,
     art: "linear-gradient(160deg, #134e4a, #0f766e 40%, #5eead4)",
   },
   {
@@ -229,6 +281,8 @@ export const ideas: Idea[] = [
     source: "Digital Minimalism — Cal Newport",
     curator: "Maya Chen",
     minutes: 1,
+    artKind: "lightbulb" as const,
+    format: "insight" as const,
     art: "linear-gradient(145deg, #042f2e, #115e59 50%, #99f6e4aa)",
   },
   {
@@ -240,6 +294,9 @@ export const ideas: Idea[] = [
     source: "Atomic Habits — James Clear",
     curator: "Maya Chen",
     minutes: 1,
+    artKind: "waves" as const,
+    format: "list" as const,
+    bullets: ["Notice the cue", "Design the routine", "Celebrate the reward"],
     art: "linear-gradient(155deg, #0f766e, #14b8a6, #ccfbf1)",
   },
   {
@@ -251,6 +308,8 @@ export const ideas: Idea[] = [
     source: "Behavioral science — various",
     curator: "Elena Voss",
     minutes: 2,
+    artKind: "portrait" as const,
+    format: "insight" as const,
     art: "linear-gradient(150deg, #1e3a8a, #1d4ed8 45%, #bfdbfe)",
   },
   {
@@ -262,6 +321,8 @@ export const ideas: Idea[] = [
     source: "The Psychology of Money — Morgan Housel",
     curator: "Priya Nair",
     minutes: 2,
+    artKind: "compass" as const,
+    format: "insight" as const,
     art: "linear-gradient(145deg, #78350f, #ea580c 55%, #ffedd5)",
   },
   {
@@ -273,6 +334,9 @@ export const ideas: Idea[] = [
     source: "Meditations — Marcus Aurelius",
     curator: "Marcus Hale",
     minutes: 2,
+    artKind: "spark" as const,
+    format: "quote" as const,
+    quoteAuthor: "Marcus Aurelius",
     art: "linear-gradient(160deg, #0c0a09, #292524 50%, #a8a29e66)",
   },
   {
@@ -284,6 +348,8 @@ export const ideas: Idea[] = [
     source: "Creative practice — various",
     curator: "Nina Park",
     minutes: 1,
+    artKind: "habit-loop" as const,
+    format: "insight" as const,
     art: "linear-gradient(145deg, #9f1239, #be123c 40%, #fda4af)",
   },
   {
@@ -295,6 +361,9 @@ export const ideas: Idea[] = [
     source: "Communication research — various",
     curator: "Dev Patel",
     minutes: 1,
+    artKind: "zones" as const,
+    format: "list" as const,
+    bullets: ["Notice the cue", "Design the routine", "Celebrate the reward"],
     art: "linear-gradient(155deg, #312e81, #4338ca 50%, #ddd6fe)",
   },
   {
@@ -306,6 +375,8 @@ export const ideas: Idea[] = [
     source: "Stress physiology — various",
     curator: "Sara Okonkwo",
     minutes: 2,
+    artKind: "books" as const,
+    format: "insight" as const,
     art: "linear-gradient(150deg, #064e3b, #047857 45%, #a7f3d0)",
   },
   {
@@ -317,6 +388,8 @@ export const ideas: Idea[] = [
     source: "Statistics for life — various",
     curator: "Aisha Rahman",
     minutes: 2,
+    artKind: "lightbulb" as const,
+    format: "insight" as const,
     art: "linear-gradient(145deg, #155e75, #0e7490 50%, #67e8f9)",
   },
   {
@@ -328,6 +401,8 @@ export const ideas: Idea[] = [
     source: "Implementation intentions — Peter Gollwitzer",
     curator: "Elena Voss",
     minutes: 1,
+    artKind: "waves" as const,
+    format: "insight" as const,
     art: "linear-gradient(160deg, #1e40af, #2563eb 40%, #93c5fd)",
   },
   {
@@ -339,6 +414,8 @@ export const ideas: Idea[] = [
     source: "The Psychology of Money — Morgan Housel",
     curator: "Priya Nair",
     minutes: 2,
+    artKind: "portrait" as const,
+    format: "insight" as const,
     art: "linear-gradient(145deg, #92400e, #c2410c 55%, #fed7aa)",
   },
 ];

@@ -49,38 +49,38 @@
 }
 
 :root {
-  --background: #07141a;
-  --foreground: #f4f7f8;
-  --card: #0d2229;
-  --card-foreground: #f4f7f8;
-  --popover: #0d2229;
-  --popover-foreground: #f4f7f8;
-  --primary: #f3d08a;
-  --primary-foreground: #07141a;
-  --secondary: #123038;
-  --secondary-foreground: #f4f7f8;
-  --muted: #123038;
-  --muted-foreground: #9bb0b7;
-  --accent: #0f766e;
-  --accent-foreground: #f4f7f8;
+  --background: #eef1f4;
+  --foreground: #1a1d21;
+  --card: #ffffff;
+  --card-foreground: #1a1d21;
+  --popover: #ffffff;
+  --popover-foreground: #1a1d21;
+  --primary: #e8573a;
+  --primary-foreground: #ffffff;
+  --secondary: #e7ebf0;
+  --secondary-foreground: #1a1d21;
+  --muted: #e7ebf0;
+  --muted-foreground: #5f6b76;
+  --accent: #2f6bff;
+  --accent-foreground: #ffffff;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: rgb(255 255 255 / 12%);
-  --input: rgb(255 255 255 / 14%);
-  --ring: #f3d08a;
-  --chart-1: #0f766e;
-  --chart-2: #f3d08a;
-  --chart-3: #b45309;
-  --chart-4: #1d4ed8;
-  --chart-5: #be123c;
-  --radius: 0.75rem;
-  --sidebar: #0d2229;
-  --sidebar-foreground: #f4f7f8;
-  --sidebar-primary: #f3d08a;
-  --sidebar-primary-foreground: #07141a;
-  --sidebar-accent: #123038;
-  --sidebar-accent-foreground: #f4f7f8;
-  --sidebar-border: rgb(255 255 255 / 12%);
-  --sidebar-ring: #f3d08a;
+  --border: rgb(26 29 33 / 10%);
+  --input: rgb(26 29 33 / 12%);
+  --ring: #e8573a;
+  --chart-1: #e8573a;
+  --chart-2: #2f6bff;
+  --chart-3: #0f766e;
+  --chart-4: #f5c542;
+  --chart-5: #7a54c8;
+  --radius: 1rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1a1d21;
+  --sidebar-primary: #e8573a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e7ebf0;
+  --sidebar-accent-foreground: #1a1d21;
+  --sidebar-border: rgb(26 29 33 / 10%);
+  --sidebar-ring: #e8573a;
 }
 
 @layer base {
@@ -101,10 +101,25 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-6px);
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulse-wave {
+  0%,
+  100% {
+    transform: scaleY(0.7);
+  }
+  50% {
+    transform: scaleY(1.15);
   }
 }
 
 .animate-float-soft {
-  animation: float-soft 5s ease-in-out infinite;
+  animation: float-soft 4.5s ease-in-out infinite;
+}
+
+.wave-bar {
+  transform-origin: center;
+  animation: pulse-wave 1.1s ease-in-out infinite;
 }

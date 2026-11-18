@@ -17,14 +17,14 @@ const instrument = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Mindstash — Microlearning that sticks",
   description:
-    "Replace doomscrolling with bite-sized ideas from books and thinkers. Stash insights, build streaks, and get smarter every day.",
+    "Replace doomscrolling with bite-sized ideas from books and thinkers. Stash insights, build streaks, listen, and scan books.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${figtree.variable} ${instrument.variable} h-full dark`}
+      className={`${figtree.variable} ${instrument.variable} h-full`}
     >
       <body className="min-h-full flex flex-col font-sans">
         <AppShell>{children}</AppShell>

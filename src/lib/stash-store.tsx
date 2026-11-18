@@ -9,7 +9,7 @@ import {
   type ReactNode,
 } from "react";
 
-const STORAGE_KEY = "mindstash-v1";
+const STORAGE_KEY = "mindstash-v2";
 
 export type Collection = {
   id: string;
@@ -18,14 +18,19 @@ export type Collection = {
   createdAt: string;
 };
 
+export type DayStatus = "read" | "freeze";
+
 type PersistedState = {
   onboarded: boolean;
   topics: string[];
   stashed: string[];
   collections: Collection[];
   streak: number;
+  maxStreak: number;
+  freezesLeft: number;
   lastVisit: string | null;
   readToday: string[];
+  dayLog: Record<string, DayStatus>;
 };
 
 type Snapshot = PersistedState & { ready: boolean };
@@ -36,6 +41,7 @@ type StashContextValue = Snapshot & {
   isStashed: (ideaId: string) => boolean;
   toggleStash: (ideaId: string) => void;
   markRead: (ideaId: string) => void;
+  applyFreeze: () => boolean;
   createCollection: (name: string, ideaId?: string) => void;
   addToCollection: (collectionId: string, ideaId: string) => void;
   removeFromCollection: (collectionId: string, ideaId: string) => void;
@@ -48,51 +54,63 @@ const defaultState: PersistedState = {
   stashed: [],
   collections: [],
   streak: 0,
+  maxStreak: 0,
+  freezesLeft: 4,
   lastVisit: null,
   readToday: [],
+  dayLog: {},
 };
 
 const serverSnapshot: Snapshot = { ...defaultState, ready: false };
 
 const StashContext = createContext<StashContextValue | null>(null);
 
-function todayKey() {
-  return new Date().toISOString().slice(0, 10);
+export function todayKey(d = new Date()) {
+  return d.toISOString().slice(0, 10);
 }
 
-function computeStreak(prev: PersistedState): Pick<
-  PersistedState,
-  "streak" | "lastVisit" | "readToday"
-> {
+function computeStreak(prev: PersistedState): PersistedState {
   const today = todayKey();
   if (prev.lastVisit === today) {
     return {
-      streak: prev.streak,
-      lastVisit: today,
-      readToday: prev.readToday,
+      ...prev,
+      maxStreak: Math.max(prev.maxStreak, prev.streak),
     };
   }
 
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-  const yKey = yesterday.toISOString().slice(0, 10);
-  const continued = prev.lastVisit === yKey;
+  const yKey = todayKey(yesterday);
+  const continued =
+    prev.lastVisit === yKey || prev.dayLog[yKey] === "freeze";
 
+  const streak = continued ? prev.streak + 1 : 1;
   return {
-    streak: continued ? prev.streak + 1 : 1,
+    ...prev,
+    streak,
+    maxStreak: Math.max(prev.maxStreak, streak),
     lastVisit: today,
     readToday: [],
+    dayLog: { ...prev.dayLog, [today]: prev.dayLog[today] ?? "read" },
   };
 }
 
 function readStorage(): PersistedState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { ...defaultState, ...computeStreak(defaultState) };
-    const parsed = JSON.parse(raw) as PersistedState;
-    return { ...parsed, ...computeStreak(parsed) };
+    if (!raw) {
+      // migrate v1 if present
+      const v1 = localStorage.getItem("mindstash-v1");
+      if (v1) {
+        const parsed = JSON.parse(v1) as Partial<PersistedState>;
+        return computeStreak({ ...defaultState, ...parsed });
+      }
+      return computeStreak(defaultState);
+    }
+    const parsed = JSON.parse(raw) as Partial<PersistedState>;
+    return computeStreak({ ...defaultState, ...parsed });
   } catch {
-    return { ...defaultState, ...computeStreak(defaultState) };
+    return computeStreak(defaultState);
   }
 }
 
@@ -117,7 +135,6 @@ function createStore() {
     subscribe(listener: Listener) {
       hydrate();
       listeners.add(listener);
-      // Notify after subscribe so clients pick up the hydrated snapshot.
       queueMicrotask(() => listener());
       return () => listeners.delete(listener);
     },
@@ -135,8 +152,11 @@ function createStore() {
         stashed: snapshot.stashed,
         collections: snapshot.collections,
         streak: snapshot.streak,
+        maxStreak: snapshot.maxStreak,
+        freezesLeft: snapshot.freezesLeft,
         lastVisit: snapshot.lastVisit,
         readToday: snapshot.readToday,
+        dayLog: snapshot.dayLog,
       };
       const next = updater(current);
       if (next === current) return;
@@ -191,9 +211,31 @@ export function StashProvider({ children }: { children: ReactNode }) {
 
   const markRead = useCallback((ideaId: string) => {
     store.setState((s) => {
-      if (s.readToday.includes(ideaId)) return s;
-      return { ...s, readToday: [...s.readToday, ideaId] };
+      const today = todayKey();
+      if (s.readToday.includes(ideaId) && s.dayLog[today] === "read") return s;
+      return {
+        ...s,
+        readToday: s.readToday.includes(ideaId)
+          ? s.readToday
+          : [...s.readToday, ideaId],
+        dayLog: { ...s.dayLog, [today]: "read" },
+      };
     });
+  }, []);
+
+  const applyFreeze = useCallback(() => {
+    let ok = false;
+    store.setState((s) => {
+      if (s.freezesLeft <= 0) return s;
+      const today = todayKey();
+      ok = true;
+      return {
+        ...s,
+        freezesLeft: s.freezesLeft - 1,
+        dayLog: { ...s.dayLog, [today]: "freeze" },
+      };
+    });
+    return ok;
   }, []);
 
   const createCollection = useCallback((name: string, ideaId?: string) => {
@@ -258,6 +300,7 @@ export function StashProvider({ children }: { children: ReactNode }) {
       isStashed,
       toggleStash,
       markRead,
+      applyFreeze,
       createCollection,
       addToCollection,
       removeFromCollection,
@@ -270,6 +313,7 @@ export function StashProvider({ children }: { children: ReactNode }) {
       isStashed,
       toggleStash,
       markRead,
+      applyFreeze,
       createCollection,
       addToCollection,
       removeFromCollection,
