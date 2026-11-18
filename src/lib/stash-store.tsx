@@ -172,9 +172,15 @@ function createStore() {
 
   return {
     subscribe(listener: Listener) {
+      const before = hydrated;
       hydrate();
       listeners.add(listener);
-      queueMicrotask(() => listener());
+      // After first client hydrate, notify so ready/stashed state streams in.
+      if (!before && hydrated) {
+        queueMicrotask(() => {
+          if (listeners.has(listener)) listener();
+        });
+      }
       return () => listeners.delete(listener);
     },
     getSnapshot(): Snapshot {
@@ -188,8 +194,13 @@ function createStore() {
       const current = sliceState(snapshot);
       const next = updater(current);
       if (next === current) return;
+      // Keep a stable snapshot reference only when data actually changes.
       snapshot = { ...next, ready: true };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      } catch {
+        // Ignore quota errors; in-memory state still updates.
+      }
       emit();
     },
   };
@@ -233,12 +244,10 @@ export function StashProvider({ children }: { children: ReactNode }) {
   const toggleStash = useCallback((ideaId: string) => {
     store.setState((s) => {
       const has = s.stashed.includes(ideaId);
-      return {
-        ...s,
-        stashed: has
-          ? s.stashed.filter((id) => id !== ideaId)
-          : [ideaId, ...s.stashed],
-      };
+      const stashed = has
+        ? s.stashed.filter((id) => id !== ideaId)
+        : [ideaId, ...s.stashed.filter((id) => id !== ideaId)];
+      return { ...s, stashed };
     });
   }, []);
 

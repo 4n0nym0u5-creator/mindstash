@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 
 type StepId =
   | "welcome"
+  | "compare"
   | "profile"
   | "reasons"
   | "energy"
@@ -28,6 +29,7 @@ type StepId =
 
 const steps: { id: StepId; phase: "INTRO" | "PROFILE" | "PERSONALIZE" | "PERSONALITY" | "PLAN" }[] = [
   { id: "welcome", phase: "INTRO" },
+  { id: "compare", phase: "INTRO" },
   { id: "profile", phase: "PROFILE" },
   { id: "reasons", phase: "PERSONALIZE" },
   { id: "energy", phase: "PERSONALITY" },
@@ -159,6 +161,50 @@ export function Onboarding() {
                 </p>
                 <div className="mt-10 flex flex-1 flex-col items-center justify-center">
                   <Mascot mood="hero" className="h-36 w-32 animate-float-soft" />
+                </div>
+              </>
+            )}
+
+            {step.id === "compare" && (
+              <>
+                <h1 className="mt-5 text-center text-2xl font-bold leading-snug sm:text-3xl">
+                  Key insights in 15 min
+                </h1>
+                <p className="mt-2 text-center text-sm text-[#5F6B76]">
+                  Skip the overwhelm of full books — keep the ideas that change
+                  how you think.
+                </p>
+                <div className="mt-8 grid flex-1 grid-cols-2 gap-0 overflow-hidden rounded-[1.5rem] border border-black/5 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.35)]">
+                  <div className="relative flex flex-col items-center bg-[#9AA3AD] px-3 pb-6 pt-8 text-center text-white">
+                    <p className="text-sm font-bold">Full Books</p>
+                    <p className="text-xs opacity-80">too many hours</p>
+                    <Mascot mood="overwhelmed" className="mt-4 h-28 w-24" />
+                    <div className="mt-2 flex flex-col gap-1">
+                      {[0, 1, 2].map((i) => (
+                        <div
+                          key={i}
+                          className="h-2.5 w-14 rounded-sm"
+                          style={{
+                            background: ["#E8573A", "#2F6BFF", "#F5C542"][i],
+                            transform: `rotate(${(i - 1) * 4}deg)`,
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div
+                    className="relative flex flex-col items-center px-3 pb-6 pt-8 text-center"
+                    style={{
+                      background:
+                        "radial-gradient(circle at 50% 30%, #FFF6D6, #F5C542)",
+                    }}
+                  >
+                    <p className="text-sm font-bold">
+                      <span className="text-[#E8573A]">Key</span> insights
+                    </p>
+                    <p className="text-xs text-[#1A1D21]/70">in 15 min.</p>
+                    <Mascot mood="hero" className="mt-4 h-28 w-24" />
+                  </div>
                 </div>
               </>
             )}

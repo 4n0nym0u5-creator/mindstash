@@ -71,7 +71,11 @@ export function IdeaCard({
             size="icon"
             variant="ghost"
             aria-label={stashed ? "Remove from stash" : "Stash idea"}
-            onClick={() => toggleStash(idea.id)}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleStash(idea.id);
+            }}
             className={cn(
               "rounded-full",
               stashed && "text-[#E8573A]",
@@ -140,7 +144,11 @@ export function IdeaCard({
             size="icon"
             variant="ghost"
             aria-label={stashed ? "Remove from stash" : "Stash idea"}
-            onClick={() => toggleStash(idea.id)}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleStash(idea.id);
+            }}
             className={cn(
               "size-10 rounded-full border border-black/5 bg-[#EEF1F4]",
               stashed && "border-[#E8573A]/30 text-[#E8573A]",
