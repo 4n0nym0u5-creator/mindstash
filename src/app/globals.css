@@ -39,6 +39,9 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-stone: var(--stone);
+  --color-ember: var(--ember);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -49,38 +52,42 @@
 }
 
 :root {
-  --background: #eef1f4;
-  --foreground: #1a1d21;
+  /* Sophisticated cool stone + ink, ember used sparingly */
+  --background: #f0f2f5;
+  --foreground: #141820;
+  --ink: #141820;
+  --stone: #f7f8fa;
+  --ember: #c94b34;
   --card: #ffffff;
-  --card-foreground: #1a1d21;
+  --card-foreground: #141820;
   --popover: #ffffff;
-  --popover-foreground: #1a1d21;
-  --primary: #e8573a;
+  --popover-foreground: #141820;
+  --primary: #c94b34;
   --primary-foreground: #ffffff;
-  --secondary: #e7ebf0;
-  --secondary-foreground: #1a1d21;
-  --muted: #e7ebf0;
-  --muted-foreground: #5f6b76;
-  --accent: #2f6bff;
+  --secondary: #e8ebf0;
+  --secondary-foreground: #141820;
+  --muted: #e8ebf0;
+  --muted-foreground: #5c6570;
+  --accent: #2a4a6b;
   --accent-foreground: #ffffff;
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: rgb(26 29 33 / 10%);
-  --input: rgb(26 29 33 / 12%);
-  --ring: #e8573a;
-  --chart-1: #e8573a;
-  --chart-2: #2f6bff;
-  --chart-3: #0f766e;
-  --chart-4: #f5c542;
-  --chart-5: #7a54c8;
+  --destructive: oklch(0.55 0.2 25);
+  --border: rgb(20 24 32 / 9%);
+  --input: rgb(20 24 32 / 10%);
+  --ring: #c94b34;
+  --chart-1: #c94b34;
+  --chart-2: #2a4a6b;
+  --chart-3: #3d6b5a;
+  --chart-4: #c4a35a;
+  --chart-5: #6b5a7a;
   --radius: 1rem;
   --sidebar: #ffffff;
-  --sidebar-foreground: #1a1d21;
-  --sidebar-primary: #e8573a;
+  --sidebar-foreground: #141820;
+  --sidebar-primary: #c94b34;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e7ebf0;
-  --sidebar-accent-foreground: #1a1d21;
-  --sidebar-border: rgb(26 29 33 / 10%);
-  --sidebar-ring: #e8573a;
+  --sidebar-accent: #e8ebf0;
+  --sidebar-accent-foreground: #141820;
+  --sidebar-border: rgb(20 24 32 / 9%);
+  --sidebar-ring: #c94b34;
 }
 
 @layer base {
@@ -89,9 +96,22 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+    background-image:
+      radial-gradient(ellipse 90% 50% at 50% -20%, rgb(201 75 52 / 7%), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 100%, rgb(42 74 107 / 6%), transparent);
+    background-attachment: fixed;
   }
   html {
     @apply font-sans;
+  }
+}
+
+@layer utilities {
+  .surface-card {
+    @apply rounded-[1.35rem] border border-border bg-card shadow-[0_18px_50px_-36px_rgba(20,24,32,0.35)];
+  }
+  .label-kicker {
+    @apply text-[11px] font-semibold uppercase tracking-[0.2em] text-primary;
   }
 }
 

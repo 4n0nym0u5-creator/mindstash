@@ -7,6 +7,7 @@ import { ChevronRight, Flame } from "lucide-react";
 import { ideas } from "@/data/ideas";
 import { useStash } from "@/lib/stash-store";
 import { IdeaCard } from "@/components/idea-card";
+import { AppFrame, PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 
 export function IdeaFeed() {
@@ -55,36 +56,32 @@ export function IdeaFeed() {
 
   if (!current) {
     return (
-      <div className="flex flex-1 items-center justify-center px-6 text-center text-[#5F6B76]">
+      <AppFrame className="items-center justify-center text-center text-muted-foreground">
         No ideas yet. Explore topics to fill your feed.
-      </div>
+      </AppFrame>
     );
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-lg flex-1 flex-col px-4 pb-28 pt-6 sm:px-6">
-      <header className="mb-5 flex items-end justify-between gap-3">
-        <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#E8573A]">
-            Mindstash
-          </p>
-          <h1 className="mt-1 font-[family-name:var(--font-display)] text-3xl text-[#1A1D21]">
-            Today&apos;s ideas
-          </h1>
-          <p className="mt-1 text-sm text-[#5F6B76]">
-            {profile?.energy
-              ? `Your plan · ${profile.monthlyGoal} ideas / week`
-              : "Quick microlearning insights"}
-          </p>
-        </div>
-        <Link
-          href="/streaks"
-          className="flex items-center gap-1.5 rounded-full border border-[#E8573A]/25 bg-[#FFE8E1] px-3 py-1.5 text-sm font-semibold text-[#E8573A]"
-        >
-          <Flame className="size-4" />
-          {streak}
-        </Link>
-      </header>
+    <AppFrame>
+      <PageHeader
+        eyebrow="Mindstash"
+        title="Today's ideas"
+        subtitle={
+          profile?.energy
+            ? `Your plan · ${profile.monthlyGoal} ideas / week`
+            : "Quick microlearning insights"
+        }
+        action={
+          <Link
+            href="/streaks"
+            className="flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary"
+          >
+            <Flame className="size-4" />
+            {streak}
+          </Link>
+        }
+      />
 
       <div className="relative flex-1">
         <AnimatePresence mode="wait">
@@ -105,22 +102,22 @@ export function IdeaFeed() {
           type="button"
           variant="ghost"
           onClick={prev}
-          className="rounded-full text-[#5F6B76] hover:bg-white hover:text-[#1A1D21]"
+          className="rounded-full text-muted-foreground hover:bg-card hover:text-foreground"
         >
           Previous
         </Button>
-        <p className="text-xs tabular-nums text-[#5F6B76]">
+        <p className="text-xs tabular-nums text-muted-foreground">
           {index + 1} / {feed.length}
         </p>
         <Button
           type="button"
           onClick={next}
-          className="rounded-full bg-[#1A1D21] text-white hover:bg-black"
+          className="rounded-full bg-ink text-white hover:bg-foreground"
         >
           Next idea
           <ChevronRight className="size-4" />
         </Button>
       </div>
-    </div>
+    </AppFrame>
   );
 }

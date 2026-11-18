@@ -24,6 +24,7 @@ import {
   Salad,
   Smile,
   Sparkles,
+  ShieldAlert,
   Target,
   TrainFront,
   Trophy,
@@ -56,8 +57,20 @@ export const profileTopics: ProfileTopic[] = [
   {
     id: "love",
     label: "Love & Relationships",
-    mapsTo: ["psychology"],
+    mapsTo: ["relationships", "psychology"],
     icon: Heart,
+  },
+  {
+    id: "narcissism",
+    label: "Narcissism & recovery",
+    mapsTo: ["narcissism", "boundaries", "relationships"],
+    icon: ShieldAlert,
+  },
+  {
+    id: "boundaries",
+    label: "Boundaries",
+    mapsTo: ["boundaries", "relationships"],
+    icon: Target,
   },
   {
     id: "personal-finance",
@@ -72,6 +85,7 @@ export const growthReasons = [
   { id: "promotion", label: "Getting a promotion", icon: BriefcaseBusiness },
   { id: "entrepreneur", label: "Becoming an entrepreneur", icon: ChartLine },
   { id: "relationship", label: "Relationship commitment", icon: HeartHandshake },
+  { id: "leaving", label: "Leaving a harmful relationship", icon: ShieldAlert },
   { id: "parenthood", label: "Parenthood", icon: Home },
   { id: "transition", label: "Major life transition", icon: Plane },
   { id: "financial", label: "Financial milestone", icon: CircleDollarSign },

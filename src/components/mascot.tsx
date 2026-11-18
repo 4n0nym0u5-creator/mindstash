@@ -18,11 +18,11 @@ export function Mascot({ mood = "hero", className }: MascotProps) {
       <defs>
         <linearGradient id="sparkBody" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#FF6B4A" />
-          <stop offset="55%" stopColor="#E8573A" />
+          <stop offset="55%" stopColor="#C94B34" />
           <stop offset="100%" stopColor="#C93A2A" />
         </linearGradient>
       </defs>
-      <ellipse cx="60" cy="128" rx="28" ry="6" fill="#1A1D21" opacity="0.12" />
+      <ellipse cx="60" cy="128" rx="28" ry="6" fill="#141820" opacity="0.12" />
       <path
         d="M60 12C78 28 96 48 96 72c0 22-16 40-36 40S24 94 24 72C24 48 42 28 60 12Z"
         fill="url(#sparkBody)"
@@ -33,15 +33,15 @@ export function Mascot({ mood = "hero", className }: MascotProps) {
         opacity="0.45"
       />
       {/* Eyes */}
-      <circle cx="48" cy="68" r="5.5" fill="#1A1D21" />
-      <circle cx="72" cy="68" r="5.5" fill="#1A1D21" />
+      <circle cx="48" cy="68" r="5.5" fill="#141820" />
+      <circle cx="72" cy="68" r="5.5" fill="#141820" />
       <circle cx="49.5" cy="66.5" r="1.8" fill="white" />
       <circle cx="73.5" cy="66.5" r="1.8" fill="white" />
       {mood === "overwhelmed" ? (
         <>
           <path
             d="M50 86c4 3 8 3 12 0"
-            stroke="#1A1D21"
+            stroke="#141820"
             strokeWidth="2.5"
             strokeLinecap="round"
             fill="none"
@@ -58,13 +58,13 @@ export function Mascot({ mood = "hero", className }: MascotProps) {
         <>
           <path
             d="M68 68h8"
-            stroke="#1A1D21"
+            stroke="#141820"
             strokeWidth="3"
             strokeLinecap="round"
           />
           <path
             d="M50 84c6 6 14 6 20 0"
-            stroke="#1A1D21"
+            stroke="#141820"
             strokeWidth="2.5"
             strokeLinecap="round"
             fill="none"
@@ -74,7 +74,7 @@ export function Mascot({ mood = "hero", className }: MascotProps) {
         <>
           <path
             d="M50 84c6 7 14 7 20 0"
-            stroke="#1A1D21"
+            stroke="#141820"
             strokeWidth="2.5"
             strokeLinecap="round"
             fill="none"
@@ -82,12 +82,12 @@ export function Mascot({ mood = "hero", className }: MascotProps) {
           {/* Cape */}
           <path
             d="M38 92c-10 18-8 34 2 38 6-10 14-16 20-18-2-8-8-14-22-20Z"
-            fill="#2F6BFF"
+            fill="#2A4A6B"
             opacity="0.95"
           />
           <path
             d="M82 92c10 18 8 34-2 38-6-10-14-16-20-18 2-8 8-14 22-20Z"
-            fill="#2F6BFF"
+            fill="#2A4A6B"
             opacity="0.95"
           />
           <circle cx="60" cy="96" r="7" fill="#F5C542" />

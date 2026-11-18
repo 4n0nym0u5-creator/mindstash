@@ -15,21 +15,21 @@ const books = [
     title: "Atomic Habits",
     author: "James Clear",
     match: "Atomic Habits",
-    color: "#FFE56A",
+    color: "#e8ebf0",
   },
   {
     id: "money",
     title: "The Psychology of Money",
     author: "Morgan Housel",
     match: "Psychology of Money",
-    color: "#FFD5C8",
+    color: "#e6dcc8",
   },
   {
     id: "deep",
     title: "Deep Work",
     author: "Cal Newport",
     match: "Deep Work",
-    color: "#D7EFE8",
+    color: "#d5e0e8",
   },
 ];
 
@@ -51,28 +51,26 @@ export default function ScanPage() {
   };
 
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-lg flex-col px-4 pb-10 pt-4 sm:px-6">
+    <div className="mx-auto flex min-h-dvh w-full max-w-lg flex-col px-5 pb-10 pt-4 sm:px-6">
       <div className="mb-4 flex items-center justify-between">
         <Button
           asChild
           variant="ghost"
-          className="rounded-full text-[#5F6B76] hover:bg-white"
+          className="rounded-full text-muted-foreground hover:bg-card"
         >
           <Link href="/feed">
             <ArrowLeft className="size-4" />
             Back
           </Link>
         </Button>
-        <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#E8573A]">
-          Scan
-        </p>
+        <p className="label-kicker">Scan</p>
         <span className="w-16" />
       </div>
 
-      <h1 className="font-[family-name:var(--font-display)] text-3xl text-[#1A1D21]">
+      <h1 className="font-[family-name:var(--font-display)] text-3xl text-foreground">
         Scan books, get key ideas
       </h1>
-      <p className="mt-2 text-sm text-[#5F6B76]">
+      <p className="mt-2 text-sm text-muted-foreground">
         Point at a cover — we surface the stashes that matter. Demo mode uses
         sample books.
       </p>
@@ -86,9 +84,9 @@ export default function ScanPage() {
             exit={{ opacity: 0, y: -10 }}
             className="mt-6 flex flex-1 flex-col"
           >
-            <div className="relative overflow-hidden rounded-[1.75rem] bg-[#2A3A2E] p-4 text-white shadow-[0_24px_60px_-30px_rgba(0,0,0,0.5)]">
+            <div className="relative overflow-hidden rounded-[1.75rem] bg-[#1e2834] p-4 text-white shadow-[0_24px_60px_-30px_rgba(20,24,32,0.5)]">
               <div className="mb-4 flex justify-center">
-                <span className="inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-semibold text-[#1A1D21]">
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-semibold text-foreground">
                   <Camera className="size-4" />
                   Scan Book
                 </span>
@@ -100,15 +98,17 @@ export default function ScanPage() {
                   style={{ background: book.color }}
                 />
                 <CardArt kind="books" className="absolute inset-0 opacity-90" />
-                <div className="absolute inset-x-6 top-1/3 rounded-xl bg-white/95 p-4 text-center text-[#1A1D21] shadow-lg">
+                <div className="absolute inset-x-6 top-1/3 rounded-xl bg-white/95 p-4 text-center text-foreground shadow-lg">
                   <p className="font-[family-name:var(--font-display)] text-2xl">
                     {book.title}
                   </p>
-                  <p className="mt-1 text-sm text-[#5F6B76]">{book.author}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {book.author}
+                  </p>
                 </div>
                 {phase === "scanning" && (
                   <motion.div
-                    className="absolute inset-x-0 h-1 bg-[#7ED0A8]"
+                    className="absolute inset-x-0 h-1 bg-[#7aa0c4]"
                     initial={{ top: "10%" }}
                     animate={{ top: ["10%", "85%", "10%"] }}
                     transition={{ duration: 1.2, ease: "linear" }}
@@ -123,7 +123,12 @@ export default function ScanPage() {
                   className="text-white/70"
                   aria-label="Pick from gallery"
                   onClick={() =>
-                    setBookId(books[(books.findIndex((b) => b.id === bookId) + 1) % books.length].id)
+                    setBookId(
+                      books[
+                        (books.findIndex((b) => b.id === bookId) + 1) %
+                          books.length
+                      ].id,
+                    )
                   }
                 >
                   <ImageIcon className="size-6" />
@@ -139,7 +144,7 @@ export default function ScanPage() {
               </div>
 
               {phase === "scanning" && (
-                <p className="mt-4 text-center text-sm text-[#7ED0A8]">
+                <p className="mt-4 text-center text-sm text-[#7aa0c4]">
                   Finding ideas…
                 </p>
               )}
@@ -156,8 +161,8 @@ export default function ScanPage() {
                   }}
                   className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
                     b.id === bookId
-                      ? "bg-[#1A1D21] text-white"
-                      : "bg-white text-[#5F6B76]"
+                      ? "bg-ink text-white"
+                      : "bg-card text-muted-foreground"
                   }`}
                 >
                   {b.title}
@@ -172,9 +177,9 @@ export default function ScanPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mt-6 space-y-4 pb-8"
           >
-            <div className="flex items-center justify-between rounded-full bg-white px-4 py-3 shadow-sm">
-              <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#1A1D21]">
-                <Sparkles className="size-4 text-[#E8573A]" />
+            <div className="flex items-center justify-between rounded-full bg-card px-4 py-3 shadow-sm">
+              <span className="inline-flex items-center gap-2 text-sm font-semibold text-foreground">
+                <Sparkles className="size-4 text-primary" />
                 {found.length} ideas found
               </span>
               <Button

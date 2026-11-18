@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { Flame, Snowflake, Trophy } from "lucide-react";
 import { todayKey, useStash } from "@/lib/stash-store";
+import { AppFrame, PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -34,48 +35,49 @@ export default function StreaksPage() {
   const progress = Math.min(100, (streak / milestones[2]) * 100);
 
   return (
-    <div className="mx-auto w-full max-w-lg px-4 pb-28 pt-6 sm:px-6">
-      <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#E8573A]">
-        Streaks
-      </p>
-      <h1 className="mt-1 font-[family-name:var(--font-display)] text-3xl text-[#1A1D21]">
-        Keep the flame lit
-      </h1>
+    <AppFrame>
+      <PageHeader
+        eyebrow="Streaks"
+        title="Keep the flame lit"
+        subtitle="Small daily reads compound into lasting change"
+      />
 
-      <div className="mt-6 overflow-hidden rounded-[1.5rem] border border-black/5 bg-white p-5 shadow-[0_18px_50px_-34px_rgba(0,0,0,0.4)]">
+      <div className="surface-card p-5">
         <div className="flex items-center justify-between text-sm font-semibold">
-          <span className="inline-flex items-center gap-1.5 text-[#E8573A]">
+          <span className="inline-flex items-center gap-1.5 text-primary">
             <Flame className="size-4" />
             {streak}
           </span>
-          <div className="flex gap-4 text-[#5F6B76]">
+          <div className="flex gap-4 text-muted-foreground">
             {milestones.map((m) => (
               <span key={m}>{m}</span>
             ))}
           </div>
         </div>
-        <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-[#EEF1F4]">
+        <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-secondary">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-[#E8573A] to-[#F5C542] transition-all"
+            className="h-full rounded-full bg-gradient-to-r from-primary to-[#c4a35a] transition-all"
             style={{ width: `${progress}%` }}
           />
         </div>
 
         <div className="mt-6 grid grid-cols-3 gap-3 text-center">
-          <div className="rounded-2xl bg-[#EEF1F4] px-2 py-4">
-            <Trophy className="mx-auto size-5 text-[#F5C542]" />
-            <p className="mt-2 text-2xl font-bold text-[#1A1D21]">{maxStreak}</p>
-            <p className="text-xs text-[#5F6B76]">Max streak</p>
+          <div className="rounded-2xl bg-secondary px-2 py-4">
+            <Trophy className="mx-auto size-5 text-[#c4a35a]" />
+            <p className="mt-2 text-2xl font-bold text-foreground">{maxStreak}</p>
+            <p className="text-xs text-muted-foreground">Max streak</p>
           </div>
-          <div className="rounded-2xl bg-[#FFE8E1] px-2 py-4">
-            <Flame className="mx-auto size-5 text-[#E8573A]" />
-            <p className="mt-2 text-2xl font-bold text-[#1A1D21]">{streak}</p>
-            <p className="text-xs text-[#5F6B76]">Current</p>
+          <div className="rounded-2xl bg-primary/10 px-2 py-4">
+            <Flame className="mx-auto size-5 text-primary" />
+            <p className="mt-2 text-2xl font-bold text-foreground">{streak}</p>
+            <p className="text-xs text-muted-foreground">Current</p>
           </div>
-          <div className="rounded-2xl bg-[#E4F2FF] px-2 py-4">
-            <Snowflake className="mx-auto size-5 text-[#2F6BFF]" />
-            <p className="mt-2 text-2xl font-bold text-[#1A1D21]">{freezesLeft}</p>
-            <p className="text-xs text-[#5F6B76]">Freezes left</p>
+          <div className="rounded-2xl bg-accent/10 px-2 py-4">
+            <Snowflake className="mx-auto size-5 text-accent" />
+            <p className="mt-2 text-2xl font-bold text-foreground">
+              {freezesLeft}
+            </p>
+            <p className="text-xs text-muted-foreground">Freezes left</p>
           </div>
         </div>
 
@@ -90,11 +92,11 @@ export default function StreaksPage() {
         </Button>
       </div>
 
-      <section className="mt-6 rounded-[1.5rem] border border-black/5 bg-white p-5">
-        <h2 className="font-semibold text-[#1A1D21]">{month.label}</h2>
-        <div className="mt-4 grid grid-cols-7 gap-1.5 text-center text-[11px] font-semibold text-[#5F6B76]">
-          {["S", "M", "T", "W", "T", "F", "S"].map((d) => (
-            <span key={d}>{d}</span>
+      <section className="surface-card mt-6 p-5">
+        <h2 className="font-semibold text-foreground">{month.label}</h2>
+        <div className="mt-4 grid grid-cols-7 gap-1.5 text-center text-[11px] font-semibold text-muted-foreground">
+          {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
+            <span key={`${d}-${i}`}>{d}</span>
           ))}
         </div>
         <div className="mt-2 grid grid-cols-7 gap-1.5">
@@ -109,10 +111,10 @@ export default function StreaksPage() {
                 key={cell.key}
                 className={cn(
                   "flex aspect-square items-center justify-center rounded-xl text-sm font-semibold",
-                  status === "read" && "bg-[#FFE8C8] text-[#E8573A]",
-                  status === "freeze" && "bg-[#E4F2FF] text-[#2F6BFF]",
-                  !status && "bg-[#EEF1F4] text-[#5F6B76]",
-                  isToday && "ring-2 ring-[#E8573A]",
+                  status === "read" && "bg-primary/15 text-primary",
+                  status === "freeze" && "bg-accent/15 text-accent",
+                  !status && "bg-secondary text-muted-foreground",
+                  isToday && "ring-2 ring-primary",
                 )}
               >
                 {status === "freeze" ? (
@@ -126,9 +128,9 @@ export default function StreaksPage() {
         </div>
       </section>
 
-      <p className="mt-6 rounded-full bg-[#1A1D21] px-4 py-3 text-center text-sm font-semibold text-white">
-        🔥 {streak}-day reading streak
+      <p className="mt-6 rounded-full bg-ink px-4 py-3 text-center text-sm font-semibold text-white">
+        {streak}-day reading streak
       </p>
-    </div>
+    </AppFrame>
   );
 }

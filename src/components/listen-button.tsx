@@ -42,7 +42,7 @@ export function ListenButton({
       onClick={toggle}
       className={cn(
         "rounded-full gap-2",
-        speaking && "bg-[#2F6BFF] text-white hover:bg-[#2458d9]",
+        speaking && "bg-accent text-accent-foreground hover:bg-accent/90",
         className,
       )}
       aria-pressed={speaking}

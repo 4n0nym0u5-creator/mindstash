@@ -18,7 +18,7 @@ export function BottomNav() {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-black/5 bg-white/90 backdrop-blur-xl"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/90 backdrop-blur-xl"
       aria-label="Primary"
     >
       <div className="mx-auto flex max-w-lg items-stretch justify-around px-1 pb-[env(safe-area-inset-bottom)]">
@@ -31,7 +31,9 @@ export function BottomNav() {
               href={href}
               className={cn(
                 "flex flex-1 flex-col items-center gap-1 py-2.5 text-[10px] font-semibold tracking-wide transition-colors",
-                active ? "text-[#E8573A]" : "text-[#5F6B76] hover:text-[#1A1D21]",
+                active
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               <Icon

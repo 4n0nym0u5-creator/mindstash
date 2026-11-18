@@ -1,4 +1,5 @@
 import type { ArtKind } from "@/components/card-art";
+import { narcissismIdeas } from "@/data/ideas-narcissism";
 
 export type Idea = {
   id: string;
@@ -16,7 +17,7 @@ export type Idea = {
   quoteAuthor?: string;
 };
 
-export const ideas: Idea[] = [
+const coreIdeas: Idea[] = [
   {
     id: "atomic-1",
     title: "Identity precedes outcomes",
@@ -29,7 +30,7 @@ export const ideas: Idea[] = [
     artKind: "habit-loop" as const,
     format: "list" as const,
     bullets: ["Notice the cue", "Design the routine", "Celebrate the reward"],
-    art: "linear-gradient(145deg, #0f766e 0%, #115e59 40%, #042f2e 100%)",
+    art: "linear-gradient(145deg, #1e3d34 0%, #3d6b5a 40%, #141820 100%)",
   },
   {
     id: "atomic-2",
@@ -42,7 +43,7 @@ export const ideas: Idea[] = [
     minutes: 1,
     artKind: "zones" as const,
     format: "insight" as const,
-    art: "linear-gradient(160deg, #134e4a, #0d9488 55%, #99f6e4)",
+    art: "linear-gradient(160deg, #1e3d34, #3d6b5a 55%, #6bc4a4)",
   },
   {
     id: "thinking-1",
@@ -82,7 +83,7 @@ export const ideas: Idea[] = [
     minutes: 2,
     artKind: "waves" as const,
     format: "insight" as const,
-    art: "linear-gradient(155deg, #78350f, #b45309 50%, #fcd34d55)",
+    art: "linear-gradient(155deg, #4a3a20, #8a6a3a 50%, #c4a35a55)",
   },
   {
     id: "money-2",
@@ -95,8 +96,12 @@ export const ideas: Idea[] = [
     minutes: 2,
     artKind: "portrait" as const,
     format: "list" as const,
-    bullets: ["Notice the cue", "Design the routine", "Celebrate the reward"],
-    art: "linear-gradient(140deg, #92400e, #d97706 60%, #fef3c7)",
+    bullets: [
+      "Keep a cash buffer for ordinary shocks",
+      "Size bets so one loss cannot end you",
+      "Prefer plans that survive bad luck",
+    ],
+    art: "linear-gradient(140deg, #4a3a20, #8a6a3a 60%, #c4a35a55)",
   },
   {
     id: "psych-1",
@@ -110,7 +115,7 @@ export const ideas: Idea[] = [
     artKind: "compass" as const,
     format: "quote" as const,
     quoteAuthor: "Daniel Kahneman",
-    art: "linear-gradient(150deg, #1e3a8a, #2563eb 55%, #93c5fd55)",
+    art: "linear-gradient(150deg, #1a3048, #2a4a6b 55%, #7aa0c455)",
   },
   {
     id: "psych-2",
@@ -123,7 +128,7 @@ export const ideas: Idea[] = [
     minutes: 2,
     artKind: "spark" as const,
     format: "insight" as const,
-    art: "linear-gradient(160deg, #1e40af, #3b82f6, #dbeafe)",
+    art: "linear-gradient(160deg, #1a3048, #2a4a6b, #7aa0c4)",
   },
   {
     id: "stoic-1",
@@ -164,8 +169,12 @@ export const ideas: Idea[] = [
     minutes: 2,
     artKind: "books" as const,
     format: "list" as const,
-    bullets: ["Notice the cue", "Design the routine", "Celebrate the reward"],
-    art: "linear-gradient(150deg, #064e3b, #059669 50%, #6ee7b755)",
+    bullets: [
+      "Pick a fixed bedtime window",
+      "Dim screens an hour before",
+      "Protect sleep like a meeting",
+    ],
+    art: "linear-gradient(150deg, #1e3d34, #3d6b5a 50%, #6bc4a455)",
   },
   {
     id: "health-2",
@@ -178,7 +187,7 @@ export const ideas: Idea[] = [
     minutes: 1,
     artKind: "lightbulb" as const,
     format: "insight" as const,
-    art: "linear-gradient(145deg, #065f46, #10b981 60%, #ecfdf5)",
+    art: "linear-gradient(145deg, #1e3d34, #3d6b5a 60%, #6bc4a4)",
   },
   {
     id: "create-1",
@@ -191,7 +200,7 @@ export const ideas: Idea[] = [
     minutes: 2,
     artKind: "waves" as const,
     format: "insight" as const,
-    art: "linear-gradient(150deg, #9f1239, #e11d48 50%, #fecdd855)",
+    art: "linear-gradient(150deg, #3a2430, #6b3a4a 50%, #c94b3444)",
   },
   {
     id: "create-2",
@@ -204,7 +213,7 @@ export const ideas: Idea[] = [
     minutes: 1,
     artKind: "portrait" as const,
     format: "insight" as const,
-    art: "linear-gradient(160deg, #881337, #fb7185, #fff1f2)",
+    art: "linear-gradient(160deg, #3a2430, #6b3a4a, #c94b3455)",
   },
   {
     id: "lead-1",
@@ -217,7 +226,7 @@ export const ideas: Idea[] = [
     minutes: 2,
     artKind: "compass" as const,
     format: "insight" as const,
-    art: "linear-gradient(145deg, #312e81, #4f46e5 55%, #c7d2fe55)",
+    art: "linear-gradient(145deg, #1a3048, #2a4a6b 55%, #7aa0c455)",
   },
   {
     id: "lead-2",
@@ -230,8 +239,12 @@ export const ideas: Idea[] = [
     minutes: 1,
     artKind: "spark" as const,
     format: "list" as const,
-    bullets: ["Notice the cue", "Design the routine", "Celebrate the reward"],
-    art: "linear-gradient(155deg, #3730a3, #6366f1, #e0e7ff)",
+    bullets: [
+      "State the expectation in one sentence",
+      "Name the deadline and standard",
+      "Invite questions, then follow through",
+    ],
+    art: "linear-gradient(155deg, #1a3048, #2a4a6b, #7aa0c4)",
   },
   {
     id: "science-1",
@@ -244,7 +257,7 @@ export const ideas: Idea[] = [
     minutes: 2,
     artKind: "habit-loop" as const,
     format: "insight" as const,
-    art: "linear-gradient(150deg, #155e75, #0891b2 50%, #a5f3fc55)",
+    art: "linear-gradient(150deg, #1e3540, #3a5a6b 50%, #7ab8c455)",
   },
   {
     id: "science-2",
@@ -257,7 +270,7 @@ export const ideas: Idea[] = [
     minutes: 2,
     artKind: "zones" as const,
     format: "insight" as const,
-    art: "linear-gradient(145deg, #0e7490, #06b6d4 55%, #cffafe)",
+    art: "linear-gradient(145deg, #1e3540, #3a5a6b 55%, #7ab8c4)",
   },
   {
     id: "deep-1",
@@ -270,7 +283,7 @@ export const ideas: Idea[] = [
     minutes: 2,
     artKind: "books" as const,
     format: "insight" as const,
-    art: "linear-gradient(160deg, #134e4a, #0f766e 40%, #5eead4)",
+    art: "linear-gradient(160deg, #1e3d34, #3d6b5a 40%, #6bc4a4)",
   },
   {
     id: "deep-2",
@@ -283,7 +296,7 @@ export const ideas: Idea[] = [
     minutes: 1,
     artKind: "lightbulb" as const,
     format: "insight" as const,
-    art: "linear-gradient(145deg, #042f2e, #115e59 50%, #99f6e4aa)",
+    art: "linear-gradient(145deg, #141820, #1e3d34 50%, #3d6b5a)",
   },
   {
     id: "habit-3",
@@ -296,8 +309,12 @@ export const ideas: Idea[] = [
     minutes: 1,
     artKind: "waves" as const,
     format: "list" as const,
-    bullets: ["Notice the cue", "Design the routine", "Celebrate the reward"],
-    art: "linear-gradient(155deg, #0f766e, #14b8a6, #ccfbf1)",
+    bullets: [
+      "Miss once without drama",
+      "Return the next day no matter what",
+      "Protect the identity, not the streak number",
+    ],
+    art: "linear-gradient(155deg, #1e3d34, #3d6b5a, #6bc4a4)",
   },
   {
     id: "psych-3",
@@ -310,7 +327,7 @@ export const ideas: Idea[] = [
     minutes: 2,
     artKind: "portrait" as const,
     format: "insight" as const,
-    art: "linear-gradient(150deg, #1e3a8a, #1d4ed8 45%, #bfdbfe)",
+    art: "linear-gradient(150deg, #1a3048, #2a4a6b 45%, #7aa0c4)",
   },
   {
     id: "money-3",
@@ -323,7 +340,7 @@ export const ideas: Idea[] = [
     minutes: 2,
     artKind: "compass" as const,
     format: "insight" as const,
-    art: "linear-gradient(145deg, #78350f, #ea580c 55%, #ffedd5)",
+    art: "linear-gradient(145deg, #4a3a20, #8a6a3a 55%, #c4a35a)",
   },
   {
     id: "phil-3",
@@ -350,7 +367,7 @@ export const ideas: Idea[] = [
     minutes: 1,
     artKind: "habit-loop" as const,
     format: "insight" as const,
-    art: "linear-gradient(145deg, #9f1239, #be123c 40%, #fda4af)",
+    art: "linear-gradient(145deg, #3a2430, #6b3a4a 40%, #c94b3455)",
   },
   {
     id: "lead-3",
@@ -363,8 +380,12 @@ export const ideas: Idea[] = [
     minutes: 1,
     artKind: "zones" as const,
     format: "list" as const,
-    bullets: ["Notice the cue", "Design the routine", "Celebrate the reward"],
-    art: "linear-gradient(155deg, #312e81, #4338ca 50%, #ddd6fe)",
+    bullets: [
+      "Let them finish without interrupting",
+      "Reflect the point in your words",
+      "Only then offer your view",
+    ],
+    art: "linear-gradient(155deg, #1a3048, #2a4a6b 50%, #7aa0c4)",
   },
   {
     id: "health-3",
@@ -377,7 +398,7 @@ export const ideas: Idea[] = [
     minutes: 2,
     artKind: "books" as const,
     format: "insight" as const,
-    art: "linear-gradient(150deg, #064e3b, #047857 45%, #a7f3d0)",
+    art: "linear-gradient(150deg, #1e3d34, #3d6b5a 45%, #6bc4a4)",
   },
   {
     id: "science-3",
@@ -390,7 +411,7 @@ export const ideas: Idea[] = [
     minutes: 2,
     artKind: "lightbulb" as const,
     format: "insight" as const,
-    art: "linear-gradient(145deg, #155e75, #0e7490 50%, #67e8f9)",
+    art: "linear-gradient(145deg, #1e3540, #3a5a6b 50%, #7ab8c4)",
   },
   {
     id: "psych-4",
@@ -403,7 +424,7 @@ export const ideas: Idea[] = [
     minutes: 1,
     artKind: "waves" as const,
     format: "insight" as const,
-    art: "linear-gradient(160deg, #1e40af, #2563eb 40%, #93c5fd)",
+    art: "linear-gradient(160deg, #1a3048, #2a4a6b 40%, #7aa0c4)",
   },
   {
     id: "money-4",
@@ -416,9 +437,95 @@ export const ideas: Idea[] = [
     minutes: 2,
     artKind: "portrait" as const,
     format: "insight" as const,
-    art: "linear-gradient(145deg, #92400e, #c2410c 55%, #fed7aa)",
+    art: "linear-gradient(145deg, #4a3a20, #8a6a3a 55%, #c4a35a)",
+  },
+  {
+    id: "bound-1",
+    title: "A soft no is still a no",
+    body: "People who hate conflict often soften refusals until they sound like maybe. Soft language invites renegotiation. A clear, kind no — without a long apology — trains others to respect your edge and trains you to trust it.",
+    takeaway: "Practice short refusals that do not invite a second pitch.",
+    topicIds: ["boundaries", "relationships"],
+    source: "Boundary practice — various",
+    curator: "Priya Nair",
+    minutes: 1,
+    artKind: "compass" as const,
+    format: "insight" as const,
+    art: "linear-gradient(150deg, #1a3048, #2a4a6b)",
+  },
+  {
+    id: "bound-2",
+    title: "Over-explaining is a leak",
+    body: "Long justifications often seek permission. The more you explain a boundary, the more material someone has to dismantle it. State the limit. Offer one reason if useful. Stop. Silence after a boundary is not rudeness — it is containment.",
+    takeaway: "Explain less; hold the line more.",
+    topicIds: ["boundaries", "psychology"],
+    source: "Assertiveness research — various",
+    curator: "Elena Voss",
+    minutes: 2,
+    artKind: "lightbulb" as const,
+    format: "list" as const,
+    bullets: [
+      "Name the boundary in one sentence",
+      "Add one optional reason",
+      "End the conversation if pressured",
+    ],
+    art: "linear-gradient(145deg, #2c333d, #5c6570)",
+  },
+  {
+    id: "rel-1",
+    title: "Repair attempts predict longevity",
+    body: "Happy couples are not conflict-free — they are repair-fluent. A joke, a touch, an 'I'm sorry' mid-argument can turn a fight into a team problem. Watch whether bids for repair are received. Contempt that ignores repair is a louder signal than the fight itself.",
+    takeaway: "Track repair, not just romance.",
+    topicIds: ["relationships", "psychology"],
+    source: "Gottman research — various",
+    curator: "Maya Chen",
+    minutes: 2,
+    artKind: "habit-loop" as const,
+    format: "insight" as const,
+    art: "linear-gradient(155deg, #5c2e3a, #8b4557)",
+  },
+  {
+    id: "rel-2",
+    title: "Choose partners by how they handle your no",
+    body: "Charm is easy on yes. Character shows on no. Early dating that punishes autonomy — sulking, guilt, rage — is a preview, not a glitch. Treat early boundary tests as data, not drama to soothe away.",
+    takeaway: "Compatibility includes respect for your limits.",
+    topicIds: ["relationships", "boundaries", "narcissism"],
+    source: "Attachment & dating — various",
+    curator: "Maya Chen",
+    minutes: 2,
+    artKind: "spark" as const,
+    format: "insight" as const,
+    art: "linear-gradient(150deg, #6b3a4a, #c94b34)",
+  },
+  {
+    id: "rel-3",
+    title: "Mutuality is the quiet green flag",
+    body: "Ask who initiates plans, apologies, emotional labor, and check-ins. Chronic one-way effort is not romance — it is unpaid care work. Healthy love has rhythm: give, receive, repair, rest.",
+    takeaway: "Audit reciprocity the way you audit a budget.",
+    topicIds: ["relationships"],
+    source: "Relationship science — various",
+    curator: "Sara Okonkwo",
+    minutes: 2,
+    artKind: "waves" as const,
+    format: "quote" as const,
+    quoteAuthor: "Relationship practice",
+    art: "linear-gradient(145deg, #5c2e3a, #2c333d)",
+  },
+  {
+    id: "phil-4",
+    title: "Self-respect is a daily practice",
+    body: "Self-respect is not a feeling you wait for — it is the accumulation of kept promises to yourself. Tiny ones count: sleep, a walk, ending a conversation that demeans you. Dignity is built in private votes.",
+    takeaway: "Keep one small promise to yourself today.",
+    topicIds: ["philosophy", "psychology", "boundaries"],
+    source: "Practical philosophy — various",
+    curator: "Marcus Hale",
+    minutes: 1,
+    artKind: "portrait" as const,
+    format: "insight" as const,
+    art: "linear-gradient(160deg, #141820, #2c333d)",
   },
 ];
+
+export const ideas: Idea[] = [...narcissismIdeas, ...coreIdeas];
 
 export function getIdea(id: string) {
   return ideas.find((i) => i.id === id);

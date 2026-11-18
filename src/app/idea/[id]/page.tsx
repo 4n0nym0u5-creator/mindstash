@@ -50,7 +50,7 @@ export default function IdeaPage({
   if (!idea) {
     return (
       <div className="mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center px-6 text-center">
-        <p className="font-[family-name:var(--font-display)] text-3xl text-[#1A1D21]">
+        <p className="font-[family-name:var(--font-display)] text-3xl text-foreground">
           Idea not found
         </p>
         <Button asChild className="mt-6 rounded-full">
@@ -65,7 +65,7 @@ export default function IdeaPage({
   const primaryTopic = getTopic(idea.topicIds[0]);
 
   return (
-    <div className="mx-auto w-full max-w-lg px-4 pb-16 pt-4 sm:px-6">
+    <div className="mx-auto w-full max-w-lg px-5 pb-16 pt-4 sm:px-6">
       <div className="mb-4 flex items-center justify-between">
         <Button
           type="button"
@@ -90,7 +90,7 @@ export default function IdeaPage({
                 <FolderPlus className="size-5" />
               </Button>
             </DialogTrigger>
-            <DialogContent className="border-black/5 bg-white text-[#1A1D21] sm:max-w-md">
+            <DialogContent className="border-border bg-card text-foreground sm:max-w-md">
               <DialogHeader>
                 <DialogTitle className="font-[family-name:var(--font-display)] text-2xl">
                   Add to a stash
@@ -98,7 +98,7 @@ export default function IdeaPage({
               </DialogHeader>
               <div className="space-y-2">
                 {collections.length === 0 && (
-                  <p className="text-sm text-[#5F6B76]">
+                  <p className="text-sm text-muted-foreground">
                     No collections yet. Create one from your Library.
                   </p>
                 )}
@@ -107,10 +107,10 @@ export default function IdeaPage({
                     key={c.id}
                     type="button"
                     onClick={() => addToCollection(c.id, idea.id)}
-                    className="flex w-full items-center justify-between rounded-xl border border-black/5 bg-[#EEF1F4] px-4 py-3 text-left text-sm hover:bg-[#e2e7ec]"
+                    className="flex w-full items-center justify-between rounded-xl border border-border bg-secondary px-4 py-3 text-left text-sm hover:bg-secondary/80"
                   >
                     <span>{c.name}</span>
-                    <span className="text-xs text-[#5F6B76]">
+                    <span className="text-xs text-muted-foreground">
                       {c.ideaIds.length}
                     </span>
                   </button>
@@ -131,8 +131,8 @@ export default function IdeaPage({
             size="icon"
             onClick={() => toggleStash(idea.id)}
             className={cn(
-              "rounded-full border border-black/5 bg-white text-[#1A1D21]",
-              stashed && "border-[#E8573A]/40 text-[#E8573A]",
+              "rounded-full border border-border bg-card text-foreground",
+              stashed && "border-primary/40 text-primary",
             )}
             aria-label={stashed ? "Remove from stash" : "Stash idea"}
           >
@@ -145,29 +145,40 @@ export default function IdeaPage({
         </div>
       </div>
 
-      <article className="overflow-hidden rounded-[1.75rem] border border-black/5 bg-white shadow-[0_24px_60px_-36px_rgba(0,0,0,0.4)]">
+      <article className="surface-card overflow-hidden">
         <CardArt kind={idea.artKind} title={idea.title} className="h-48 w-full" />
         <div className="p-6 sm:p-8">
-          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#E8573A]">
-            {primaryTopic?.name}
-          </p>
-          <h1 className="mt-3 font-[family-name:var(--font-display)] text-4xl leading-[1.1] text-[#1A1D21]">
+          <p className="label-kicker">{primaryTopic?.name}</p>
+          <h1 className="mt-3 font-[family-name:var(--font-display)] text-4xl leading-[1.1] text-foreground">
             {idea.title}
           </h1>
-          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-[#5F6B76]">
+          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
             <span className="inline-flex items-center gap-1.5">
               <Clock3 className="size-4" />
               {idea.minutes} min · {idea.curator}
             </span>
-            <ListenButton text={`${idea.title}. ${idea.body}. ${idea.takeaway}`} />
+            <ListenButton
+              text={`${idea.title}. ${idea.body}. ${idea.takeaway}`}
+            />
           </div>
-          <p className="mt-6 text-lg leading-relaxed text-[#1A1D21]/90">
-            {idea.body}
-          </p>
-          <p className="mt-6 border-l-[3px] border-[#E8573A] pl-4 text-base italic text-[#5F6B76]">
+          {idea.format === "list" && idea.bullets ? (
+            <ul className="mt-6 space-y-2.5">
+              {idea.bullets.map((b) => (
+                <li key={b} className="flex gap-2 text-lg text-foreground/90">
+                  <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-primary" />
+                  {b}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-6 text-lg leading-relaxed text-foreground/90">
+              {idea.body}
+            </p>
+          )}
+          <p className="mt-6 border-l-[3px] border-primary pl-4 text-base italic text-muted-foreground">
             {idea.takeaway}
           </p>
-          <p className="mt-6 text-sm text-[#5F6B76]">{idea.source}</p>
+          <p className="mt-6 text-sm text-muted-foreground">{idea.source}</p>
           <div className="mt-4 flex flex-wrap gap-2">
             {idea.topicIds.map((tid) => {
               const t = getTopic(tid);
@@ -176,7 +187,7 @@ export default function IdeaPage({
                 <Link
                   key={tid}
                   href={`/topic/${tid}`}
-                  className="rounded-full border border-black/5 bg-[#EEF1F4] px-3 py-1 text-xs font-semibold text-[#1A1D21]"
+                  className="rounded-full border border-border bg-secondary px-3 py-1 text-xs font-semibold text-foreground"
                 >
                   {t.name}
                 </Link>
@@ -188,7 +199,7 @@ export default function IdeaPage({
 
       {related.length > 0 && (
         <section className="mt-10">
-          <h2 className="mb-4 font-[family-name:var(--font-display)] text-2xl text-[#1A1D21]">
+          <h2 className="mb-4 font-[family-name:var(--font-display)] text-2xl text-foreground">
             Related ideas
           </h2>
           <div className="grid gap-4">

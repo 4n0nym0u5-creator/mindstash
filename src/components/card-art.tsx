@@ -13,14 +13,14 @@ export type ArtKind =
   | "spark";
 
 const palettes: Record<ArtKind, { bg: string; accent: string }> = {
-  "habit-loop": { bg: "#FFE56A", accent: "#1A1D21" },
-  zones: { bg: "#E8D9FF", accent: "#5B3FA8" },
-  books: { bg: "#D7EFE8", accent: "#0F766E" },
-  lightbulb: { bg: "#FFE8C8", accent: "#E8573A" },
-  waves: { bg: "#D8F0FF", accent: "#1D7A9C" },
-  portrait: { bg: "#ECEAE6", accent: "#1A1D21" },
-  compass: { bg: "#DDE7FF", accent: "#2F6BFF" },
-  spark: { bg: "#FFD5C8", accent: "#E8573A" },
+  "habit-loop": { bg: "#E8E4D8", accent: "#141820" },
+  zones: { bg: "#DCE3EC", accent: "#2A4A6B" },
+  books: { bg: "#D9E6DF", accent: "#3D6B5A" },
+  lightbulb: { bg: "#F0E0D8", accent: "#C94B34" },
+  waves: { bg: "#D8E4EC", accent: "#2A4A6B" },
+  portrait: { bg: "#E8E6E2", accent: "#141820" },
+  compass: { bg: "#D9E2EC", accent: "#2A4A6B" },
+  spark: { bg: "#EDD9D2", accent: "#C94B34" },
 };
 
 export function CardArt({
@@ -62,10 +62,10 @@ function noise() {
 function HabitLoop() {
   return (
     <svg viewBox="0 0 320 180" className="h-full w-full">
-      <circle cx="160" cy="90" r="48" fill="none" stroke="#1A1D21" strokeWidth="8" />
-      <circle cx="160" cy="42" r="16" fill="#E8573A" />
-      <circle cx="208" cy="112" r="16" fill="#2F6BFF" />
-      <circle cx="112" cy="112" r="16" fill="#1A1D21" />
+      <circle cx="160" cy="90" r="48" fill="none" stroke="#141820" strokeWidth="8" />
+      <circle cx="160" cy="42" r="16" fill="#C94B34" />
+      <circle cx="208" cy="112" r="16" fill="#2A4A6B" />
+      <circle cx="112" cy="112" r="16" fill="#141820" />
       <text x="160" y="46" textAnchor="middle" fontSize="8" fill="white" fontWeight="700">
         CUE
       </text>
@@ -75,7 +75,7 @@ function HabitLoop() {
       <text x="112" y="116" textAnchor="middle" fontSize="7" fill="white" fontWeight="700">
         REWARD
       </text>
-      <path d="M150 55c30 8 48 28 52 48" fill="none" stroke="#1A1D21" strokeWidth="3" strokeDasharray="4 4" />
+      <path d="M150 55c30 8 48 28 52 48" fill="none" stroke="#141820" strokeWidth="3" strokeDasharray="4 4" />
     </svg>
   );
 }
@@ -97,12 +97,12 @@ function Zones() {
 function BooksStack() {
   return (
     <svg viewBox="0 0 320 180" className="h-full w-full">
-      <rect x="90" y="110" width="140" height="18" rx="3" fill="#E8573A" transform="rotate(-4 160 119)" />
-      <rect x="95" y="90" width="130" height="18" rx="3" fill="#2F6BFF" transform="rotate(3 160 99)" />
+      <rect x="90" y="110" width="140" height="18" rx="3" fill="#C94B34" transform="rotate(-4 160 119)" />
+      <rect x="95" y="90" width="130" height="18" rx="3" fill="#2A4A6B" transform="rotate(3 160 99)" />
       <rect x="100" y="70" width="120" height="18" rx="3" fill="#0F766E" transform="rotate(-2 160 79)" />
       <rect x="105" y="50" width="110" height="18" rx="3" fill="#F5C542" transform="rotate(4 160 59)" />
-      <circle cx="230" cy="48" r="3" fill="#1A1D21" opacity="0.25" />
-      <circle cx="80" cy="60" r="2" fill="#1A1D21" opacity="0.2" />
+      <circle cx="230" cy="48" r="3" fill="#141820" opacity="0.25" />
+      <circle cx="80" cy="60" r="2" fill="#141820" opacity="0.2" />
     </svg>
   );
 }
@@ -110,9 +110,9 @@ function BooksStack() {
 function Lightbulb() {
   return (
     <svg viewBox="0 0 320 180" className="h-full w-full">
-      <circle cx="160" cy="78" r="36" fill="#FFF6D6" stroke="#E8573A" strokeWidth="4" />
-      <path d="M146 112h28v10c0 6-6 12-14 12s-14-6-14-12v-10Z" fill="#E8573A" />
-      <path d="M160 30v12M210 78h12M98 78h12M196 48l8-8M116 48l-8-8" stroke="#E8573A" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="160" cy="78" r="36" fill="#FFF6D6" stroke="#C94B34" strokeWidth="4" />
+      <path d="M146 112h28v10c0 6-6 12-14 12s-14-6-14-12v-10Z" fill="#C94B34" />
+      <path d="M160 30v12M210 78h12M98 78h12M196 48l8-8M116 48l-8-8" stroke="#C94B34" strokeWidth="4" strokeLinecap="round" />
     </svg>
   );
 }
@@ -130,7 +130,7 @@ function Waves() {
             width="10"
             height={h}
             rx="5"
-            fill={i % 2 === 0 ? "#2F6BFF" : "#7ED0A8"}
+            fill={i % 2 === 0 ? "#2A4A6B" : "#3D6B5A"}
             opacity={0.85}
           >
             <animate
@@ -156,7 +156,7 @@ function PortraitMark({ title }: { title?: string }) {
   const initial = (title ?? "Q").trim().charAt(0).toUpperCase();
   return (
     <svg viewBox="0 0 320 180" className="h-full w-full">
-      <circle cx="160" cy="88" r="48" fill="#1A1D21" />
+      <circle cx="160" cy="88" r="48" fill="#141820" />
       <circle cx="160" cy="78" r="18" fill="#F3F5F7" />
       <ellipse cx="160" cy="118" rx="28" ry="18" fill="#F3F5F7" />
       <text
@@ -164,7 +164,7 @@ function PortraitMark({ title }: { title?: string }) {
         y="168"
         textAnchor="middle"
         fontSize="14"
-        fill="#1A1D21"
+        fill="#141820"
         fontWeight="700"
         opacity="0.35"
       >
@@ -177,10 +177,10 @@ function PortraitMark({ title }: { title?: string }) {
 function Compass() {
   return (
     <svg viewBox="0 0 320 180" className="h-full w-full">
-      <circle cx="160" cy="90" r="54" fill="none" stroke="#2F6BFF" strokeWidth="6" />
-      <circle cx="160" cy="90" r="6" fill="#E8573A" />
-      <path d="M160 50l10 40-10 10-10-10 10-40Z" fill="#E8573A" />
-      <path d="M160 130l-10-40 10-10 10 10-10 40Z" fill="#1A1D21" opacity="0.35" />
+      <circle cx="160" cy="90" r="54" fill="none" stroke="#2A4A6B" strokeWidth="6" />
+      <circle cx="160" cy="90" r="6" fill="#C94B34" />
+      <path d="M160 50l10 40-10 10-10-10 10-40Z" fill="#C94B34" />
+      <path d="M160 130l-10-40 10-10 10 10-10 40Z" fill="#141820" opacity="0.35" />
     </svg>
   );
 }
@@ -188,7 +188,7 @@ function Compass() {
 function SparkBurst() {
   return (
     <svg viewBox="0 0 320 180" className="h-full w-full">
-      <circle cx="160" cy="90" r="34" fill="#E8573A" />
+      <circle cx="160" cy="90" r="34" fill="#C94B34" />
       <circle cx="160" cy="90" r="18" fill="#FFB199" />
       {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => {
         const rad = (deg * Math.PI) / 180;
@@ -201,7 +201,7 @@ function SparkBurst() {
             y1={90 + Math.sin(rad) * 42}
             x2={x2}
             y2={y2}
-            stroke="#E8573A"
+            stroke="#C94B34"
             strokeWidth="4"
             strokeLinecap="round"
           />

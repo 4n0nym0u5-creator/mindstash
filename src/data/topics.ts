@@ -8,60 +8,92 @@ export type Topic = {
 
 export const topics: Topic[] = [
   {
+    id: "narcissism",
+    name: "Narcissism",
+    description: "Patterns, protections, and recovering your self",
+    accent: "#6B3A4A",
+    pattern:
+      "radial-gradient(circle at 20% 20%, #c94b3444, transparent 45%), linear-gradient(150deg, #3a2430, #6b3a4a)",
+  },
+  {
+    id: "relationships",
+    name: "Relationships",
+    description: "Attachment, repair, and choosing wisely",
+    accent: "#8B4557",
+    pattern:
+      "radial-gradient(circle at 80% 20%, #e8a0b044, transparent 40%), linear-gradient(155deg, #5c2e3a, #8b4557)",
+  },
+  {
+    id: "boundaries",
+    name: "Boundaries",
+    description: "Saying no without abandoning yourself",
+    accent: "#2A4A6B",
+    pattern:
+      "radial-gradient(circle at 30% 70%, #7aa0c444, transparent 40%), linear-gradient(150deg, #1a3048, #2a4a6b)",
+  },
+  {
     id: "productivity",
     name: "Productivity",
     description: "Systems that make focus inevitable",
-    accent: "#0F766E",
-    pattern: "radial-gradient(circle at 20% 20%, #14b8a633, transparent 45%), linear-gradient(145deg, #0f766e, #134e4a)",
+    accent: "#3D6B5A",
+    pattern:
+      "radial-gradient(circle at 20% 20%, #6bc4a433, transparent 45%), linear-gradient(145deg, #1e3d34, #3d6b5a)",
   },
   {
     id: "psychology",
     name: "Psychology",
     description: "How minds actually decide",
-    accent: "#1D4ED8",
-    pattern: "radial-gradient(circle at 80% 10%, #60a5fa44, transparent 40%), linear-gradient(160deg, #1e3a8a, #1d4ed8)",
+    accent: "#2A4A6B",
+    pattern:
+      "radial-gradient(circle at 80% 10%, #7aa0c444, transparent 40%), linear-gradient(160deg, #1a3048, #2a4a6b)",
   },
   {
     id: "philosophy",
     name: "Philosophy",
     description: "Timeless frames for a noisy life",
-    accent: "#0F172A",
-    pattern: "radial-gradient(circle at 30% 80%, #94a3b833, transparent 40%), linear-gradient(150deg, #0f172a, #334155)",
+    accent: "#2C333D",
+    pattern:
+      "radial-gradient(circle at 30% 80%, #94a3b833, transparent 40%), linear-gradient(150deg, #141820, #2c333d)",
   },
   {
     id: "money",
     name: "Money",
     description: "Judgment under uncertainty",
-    accent: "#B45309",
-    pattern: "radial-gradient(circle at 70% 30%, #fbbf2444, transparent 45%), linear-gradient(145deg, #92400e, #b45309)",
+    accent: "#8A6A3A",
+    pattern:
+      "radial-gradient(circle at 70% 30%, #c4a35a44, transparent 45%), linear-gradient(145deg, #4a3a20, #8a6a3a)",
   },
   {
     id: "health",
     name: "Health",
     description: "Energy, sleep, and longevity",
-    accent: "#047857",
-    pattern: "radial-gradient(circle at 15% 60%, #34d39944, transparent 40%), linear-gradient(155deg, #064e3b, #047857)",
+    accent: "#3D6B5A",
+    pattern:
+      "radial-gradient(circle at 15% 60%, #6bc4a444, transparent 40%), linear-gradient(155deg, #1e3d34, #3d6b5a)",
   },
   {
     id: "creativity",
     name: "Creativity",
     description: "Making original work on purpose",
-    accent: "#BE123C",
-    pattern: "radial-gradient(circle at 90% 70%, #fb718544, transparent 40%), linear-gradient(140deg, #9f1239, #e11d48)",
+    accent: "#6B3A4A",
+    pattern:
+      "radial-gradient(circle at 90% 70%, #c94b3444, transparent 40%), linear-gradient(140deg, #3a2430, #6b3a4a)",
   },
   {
     id: "leadership",
     name: "Leadership",
     description: "Influence without theatrics",
-    accent: "#4338CA",
-    pattern: "radial-gradient(circle at 25% 25%, #a5b4fc44, transparent 45%), linear-gradient(150deg, #312e81, #4338ca)",
+    accent: "#2A4A6B",
+    pattern:
+      "radial-gradient(circle at 25% 25%, #7aa0c444, transparent 45%), linear-gradient(150deg, #1a3048, #2a4a6b)",
   },
   {
     id: "science",
     name: "Science",
     description: "Mental models from the lab",
-    accent: "#0E7490",
-    pattern: "radial-gradient(circle at 60% 20%, #22d3ee33, transparent 40%), linear-gradient(160deg, #155e75, #0e7490)",
+    accent: "#3A5A6B",
+    pattern:
+      "radial-gradient(circle at 60% 20%, #7ab8c444, transparent 40%), linear-gradient(160deg, #1e3540, #3a5a6b)",
   },
 ];
 

@@ -60,9 +60,9 @@ function ProgressRail({ index }: { index: number }) {
             <div
               className={cn(
                 "flex size-5 items-center justify-center rounded-full border-2 text-[10px]",
-                done && "border-[#E8573A] bg-[#E8573A] text-white",
-                current && "border-[#E8573A] bg-white text-[#E8573A]",
-                !done && !current && "border-[#C9CED6] bg-white text-transparent",
+                done && "border-primary bg-primary text-primary-foreground",
+                current && "border-primary bg-card text-primary",
+                !done && !current && "border-border bg-card text-transparent",
               )}
             >
               {done ? <Check className="size-3" strokeWidth={3} /> : "•"}
@@ -71,7 +71,7 @@ function ProgressRail({ index }: { index: number }) {
               <div
                 className={cn(
                   "h-0.5 flex-1",
-                  i < activeIdx ? "bg-[#E8573A]" : "bg-[#D5D9E0]",
+                  i < activeIdx ? "bg-primary" : "bg-border",
                 )}
               />
             )}
@@ -134,11 +134,11 @@ export function Onboarding() {
     step.phase === "INTRO" ? "Mindstash" : step.phase;
 
   return (
-    <div className="relative min-h-dvh overflow-hidden bg-[#F3F4F6] text-[#1A1D21]">
+    <div className="relative min-h-dvh overflow-hidden bg-background text-foreground">
       <div className="relative z-10 mx-auto flex min-h-dvh max-w-lg flex-col px-5 py-6 sm:px-7">
         {step.phase !== "INTRO" && <ProgressRail index={index} />}
 
-        <p className="text-center text-[11px] font-bold uppercase tracking-[0.22em] text-[#E8573A]">
+        <p className="text-center text-[11px] font-bold uppercase tracking-[0.22em] text-primary">
           {phaseLabel}
         </p>
 
@@ -156,7 +156,7 @@ export function Onboarding() {
                 <h1 className="mt-6 text-center font-[family-name:var(--font-display)] text-4xl leading-[1.1]">
                   Become the most interesting person in the room
                 </h1>
-                <p className="mt-3 text-center text-[#5F6B76]">
+                <p className="mt-3 text-center text-muted-foreground">
                   Based on your answers, we craft a self-growth plan.
                 </p>
                 <div className="mt-10 flex flex-1 flex-col items-center justify-center">
@@ -170,7 +170,7 @@ export function Onboarding() {
                 <h1 className="mt-5 text-center text-2xl font-bold leading-snug sm:text-3xl">
                   Key insights in 15 min
                 </h1>
-                <p className="mt-2 text-center text-sm text-[#5F6B76]">
+                <p className="mt-2 text-center text-sm text-muted-foreground">
                   Skip the overwhelm of full books — keep the ideas that change
                   how you think.
                 </p>
@@ -185,7 +185,7 @@ export function Onboarding() {
                           key={i}
                           className="h-2.5 w-14 rounded-sm"
                           style={{
-                            background: ["#E8573A", "#2F6BFF", "#F5C542"][i],
+                            background: ["#c94b34", "#2a4a6b", "#c4a35a"][i],
                             transform: `rotate(${(i - 1) * 4}deg)`,
                           }}
                         />
@@ -200,9 +200,9 @@ export function Onboarding() {
                     }}
                   >
                     <p className="text-sm font-bold">
-                      <span className="text-[#E8573A]">Key</span> insights
+                      <span className="text-primary">Key</span> insights
                     </p>
-                    <p className="text-xs text-[#1A1D21]/70">in 15 min.</p>
+                    <p className="text-xs text-foreground/70">in 15 min.</p>
                     <Mascot mood="hero" className="mt-4 h-28 w-24" />
                   </div>
                 </div>
@@ -214,7 +214,7 @@ export function Onboarding() {
                 <h1 className="mt-5 text-center text-2xl font-bold leading-snug sm:text-3xl">
                   Choose the topics you’d like to elevate
                 </h1>
-                <p className="mt-2 text-center text-sm text-[#5F6B76]">
+                <p className="mt-2 text-center text-sm text-muted-foreground">
                   The choice won’t limit your experience
                 </p>
                 <div className="mt-6 grid grid-cols-3 gap-2.5">
@@ -231,14 +231,14 @@ export function Onboarding() {
                         className={cn(
                           "flex min-h-[6.5rem] flex-col items-center justify-center gap-2 rounded-2xl border bg-white px-2 py-3 text-center shadow-sm transition",
                           active
-                            ? "border-[#E8573A] ring-2 ring-[#E8573A]/20"
+                            ? "border-primary ring-2 ring-primary/20"
                             : "border-black/5 hover:border-black/15",
                         )}
                       >
                         <Icon
                           className={cn(
                             "size-6",
-                            active ? "text-[#E8573A]" : "text-[#1A1D21]",
+                            active ? "text-primary" : "text-foreground",
                           )}
                         />
                         <span className="text-[11px] font-semibold leading-tight">
@@ -270,11 +270,11 @@ export function Onboarding() {
                         className={cn(
                           "flex w-full items-center gap-3 rounded-2xl border bg-white px-4 py-3.5 text-left shadow-sm transition",
                           active
-                            ? "border-[#E8573A] ring-2 ring-[#E8573A]/20"
+                            ? "border-primary ring-2 ring-primary/20"
                             : "border-black/5",
                         )}
                       >
-                        <Icon className="size-5 shrink-0 text-[#1A1D21]" />
+                        <Icon className="size-5 shrink-0 text-foreground" />
                         <span className="flex-1 text-sm font-semibold">
                           {row.label}
                         </span>
@@ -282,7 +282,7 @@ export function Onboarding() {
                           className={cn(
                             "flex size-5 items-center justify-center rounded-md border",
                             active
-                              ? "border-[#E8573A] bg-[#E8573A] text-white"
+                              ? "border-primary bg-primary text-primary-foreground"
                               : "border-[#C9CED6]",
                           )}
                         >
@@ -312,11 +312,11 @@ export function Onboarding() {
                         className={cn(
                           "flex w-full items-center gap-3 rounded-full border bg-white px-5 py-4 text-left shadow-sm transition",
                           active
-                            ? "border-[#E8573A] ring-2 ring-[#E8573A]/20"
+                            ? "border-primary ring-2 ring-primary/20"
                             : "border-black/5",
                         )}
                       >
-                        <Icon className="size-5 text-[#1A1D21]" />
+                        <Icon className="size-5 text-foreground" />
                         <span className="text-sm font-semibold">{row.label}</span>
                       </button>
                     );
@@ -344,11 +344,11 @@ export function Onboarding() {
                         className={cn(
                           "flex w-full items-center gap-3 rounded-2xl border bg-white px-4 py-3.5 text-left shadow-sm transition",
                           active
-                            ? "border-[#E8573A] ring-2 ring-[#E8573A]/20"
+                            ? "border-primary ring-2 ring-primary/20"
                             : "border-black/5",
                         )}
                       >
-                        <Icon className="size-5 shrink-0 text-[#1A1D21]" />
+                        <Icon className="size-5 shrink-0 text-foreground" />
                         <span className="flex-1 text-sm font-semibold">
                           {row.label}
                         </span>
@@ -356,7 +356,7 @@ export function Onboarding() {
                           className={cn(
                             "flex size-5 items-center justify-center rounded-md border",
                             active
-                              ? "border-[#E8573A] bg-[#E8573A] text-white"
+                              ? "border-primary bg-primary text-primary-foreground"
                               : "border-[#C9CED6]",
                           )}
                         >
@@ -376,15 +376,15 @@ export function Onboarding() {
                 </div>
                 <h1 className="mt-3 text-center text-3xl font-bold leading-tight">
                   Your personal growth plan{" "}
-                  <span className="text-[#E8573A]">is ready</span>
+                  <span className="text-primary">is ready</span>
                 </h1>
-                <p className="mt-2 text-center text-sm text-[#5F6B76]">
+                <p className="mt-2 text-center text-sm text-muted-foreground">
                   Based on your answers, we crafted a self-growth plan.
                 </p>
                 <div className="mt-6">
                   <GrowthPlanChart goalLabel="15 ideas per week" />
                 </div>
-                <p className="mt-4 text-center text-xs text-[#5F6B76]">
+                <p className="mt-4 text-center text-xs text-muted-foreground">
                   Tuned for{" "}
                   {energyWindows.find((e) => e.id === energy)?.label?.toLowerCase() ??
                     "your best hours"}
@@ -397,9 +397,9 @@ export function Onboarding() {
               <>
                 <h1 className="mt-5 text-center text-3xl font-bold leading-tight">
                   One Month In: You&apos;re{" "}
-                  <span className="text-[#E8573A]">Legally Smarter</span>
+                  <span className="text-primary">Legally Smarter</span>
                 </h1>
-                <p className="mt-2 text-center text-sm text-[#5F6B76]">
+                <p className="mt-2 text-center text-sm text-muted-foreground">
                   People reported these top 6 benefits after the first month
                 </p>
                 <ul className="mt-6 space-y-3">
@@ -410,14 +410,14 @@ export function Onboarding() {
                         key={b.title}
                         className="flex gap-3 rounded-2xl border border-black/5 bg-white px-4 py-3 shadow-sm"
                       >
-                        <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-[#FFE8E1] text-[#E8573A]">
+                        <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                           <Icon className="size-4" />
                         </span>
                         <div>
-                          <p className="text-sm font-bold text-[#1A1D21]">
+                          <p className="text-sm font-bold text-foreground">
                             {b.title}
                           </p>
-                          <p className="mt-0.5 text-sm text-[#5F6B76]">{b.body}</p>
+                          <p className="mt-0.5 text-sm text-muted-foreground">{b.body}</p>
                         </div>
                       </li>
                     );
@@ -433,7 +433,7 @@ export function Onboarding() {
             size="lg"
             disabled={!canContinue}
             onClick={next}
-            className="h-12 w-full rounded-full bg-[#E8573A] text-base font-semibold text-white hover:bg-[#d4482e] disabled:opacity-40"
+            className="h-12 w-full rounded-full bg-primary text-base font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-40"
           >
             {step.id === "benefits"
               ? "Start learning"
@@ -446,7 +446,7 @@ export function Onboarding() {
             <button
               type="button"
               onClick={() => setIndex((i) => Math.max(0, i - 1))}
-              className="mt-3 w-full text-center text-sm font-semibold text-[#5F6B76]"
+              className="mt-3 w-full text-center text-sm font-semibold text-muted-foreground"
             >
               Back
             </button>
